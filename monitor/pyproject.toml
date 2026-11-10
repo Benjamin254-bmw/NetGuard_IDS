@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "netguard-monitor"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["netguard-common", "scapy>=2.5", "psutil>=5.9"]
+[project.scripts]
+netguard-monitor = "netguard_monitor.main:main"
+[tool.setuptools.packages.find]
+include = ["netguard_monitor*"]

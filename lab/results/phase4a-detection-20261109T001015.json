@@ -1,0 +1,351 @@
+{
+  "result": "PASS",
+  "least_privilege_monitor": false,
+  "real_sshd": true,
+  "duration_seconds": 23.0,
+  "checks": [
+    {
+      "check": "benign traffic raises no events",
+      "expected": 0,
+      "actual": 0,
+      "pass": true
+    },
+    {
+      "check": "exactly the 7 expected events (one per dedup key)",
+      "expected": [
+        "abnormal_traffic|10.10.10.30",
+        "auth_failures|10.10.10.30",
+        "excessive_connections|10.10.10.30|10.10.10.10|9002",
+        "port_scan|10.10.10.30|10.10.10.10",
+        "suspicious_dns|10.10.10.30|distinct_names",
+        "suspicious_dns|10.10.10.30|long_label",
+        "suspicious_dns|10.10.10.30|query_rate"
+      ],
+      "actual": [
+        "abnormal_traffic|10.10.10.30",
+        "auth_failures|10.10.10.30",
+        "excessive_connections|10.10.10.30|10.10.10.10|9002",
+        "port_scan|10.10.10.30|10.10.10.10",
+        "suspicious_dns|10.10.10.30|distinct_names",
+        "suspicious_dns|10.10.10.30|long_label",
+        "suspicious_dns|10.10.10.30|query_rate"
+      ],
+      "pass": true
+    },
+    {
+      "check": "every event is attributed to the attacker",
+      "pass": true
+    },
+    {
+      "check": "nothing is attributed to the benign host",
+      "pass": true
+    },
+    {
+      "check": "every event raised at least one alert",
+      "pass": true
+    },
+    {
+      "check": "port scan escalated to critical (>=10x threshold) with 2 alerts",
+      "actual": [
+        "critical",
+        2
+      ],
+      "pass": true
+    },
+    {
+      "check": "port scan evidence agrees with independent tcpdump (distinct SYN ports)",
+      "tcpdump_distinct_ports": 1001,
+      "event_distinct_ports": 1001,
+      "pass": true
+    },
+    {
+      "check": "flood: 150 SYNs sent; tcpdump agrees; event counted them",
+      "tcpdump_syn": 150,
+      "event_connections": 150,
+      "pass": true
+    },
+    {
+      "check": "abnormal_traffic ran under the live-changed rule (version 2)",
+      "actual": 2,
+      "pass": true
+    },
+    {
+      "check": "other rules ran under version 1",
+      "pass": true
+    },
+    {
+      "check": "latency: threshold crossing -> committed in the database <= 3.0s",
+      "latencies_seconds": {
+        "port_scan|10.10.10.30|10.10.10.10": 0.394,
+        "excessive_connections|10.10.10.30|10.10.10.10|9002": 0.308,
+        "suspicious_dns|10.10.10.30|distinct_names": 0.277,
+        "suspicious_dns|10.10.10.30|query_rate": 0.277,
+        "suspicious_dns|10.10.10.30|long_label": 0.277,
+        "abnormal_traffic|10.10.10.30": 0.002,
+        "auth_failures|10.10.10.30": 0.126
+      },
+      "pass": true
+    },
+    {
+      "check": "capture path alive: monitor saw at least every packet tcpdump saw",
+      "tcpdump_packets": 17829,
+      "monitor_captured": 17837,
+      "pass": true
+    },
+    {
+      "check": "no packets dropped; monitor stopped cleanly",
+      "actual": {
+        "state": "stopped",
+        "captured": 17837,
+        "dropped": 0
+      },
+      "pass": true
+    },
+    {
+      "check": "every scenario command ran (no silent failures)",
+      "failures": [],
+      "pass": true
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "dedup_key": "port_scan|10.10.10.30|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 1142,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "threshold": 15,
+        "crossed_at": 1794172204.3032339,
+        "distinct_ports": 1001,
+        "window_seconds": 10
+      },
+      "created": 1794172204.697583,
+      "detected": 1794172204.303234,
+      "alerts": 2
+    },
+    {
+      "id": 2,
+      "dedup_key": "excessive_connections|10.10.10.30|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 51,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "threshold": 100,
+        "crossed_at": 1794172204.3895023,
+        "connections": 150,
+        "window_seconds": 10
+      },
+      "created": 1794172204.697583,
+      "detected": 1794172204.389502,
+      "alerts": 1
+    },
+    {
+      "id": 3,
+      "dedup_key": "suspicious_dns|10.10.10.30|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 72,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "indicator": "distinct_names",
+        "threshold": 50,
+        "crossed_at": 1794172204.42027,
+        "distinct_names": 121,
+        "window_seconds": 60
+      },
+      "created": 1794172204.697583,
+      "detected": 1794172204.42027,
+      "alerts": 1
+    },
+    {
+      "id": 4,
+      "dedup_key": "suspicious_dns|10.10.10.30|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 22,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "queries": 121,
+        "indicator": "query_rate",
+        "threshold": 100,
+        "crossed_at": 1794172204.4205205,
+        "window_seconds": 60
+      },
+      "created": 1794172204.697583,
+      "detected": 1794172204.42052,
+      "alerts": 1
+    },
+    {
+      "id": 5,
+      "dedup_key": "suspicious_dns|10.10.10.30|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "indicator": "long_label",
+        "crossed_at": 1794172204.4206545,
+        "example_name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.lab.test",
+        "longest_label": 60,
+        "window_seconds": 60,
+        "max_label_length": 52
+      },
+      "created": 1794172204.697583,
+      "detected": 1794172204.420654,
+      "alerts": 1
+    },
+    {
+      "id": 6,
+      "dedup_key": "abnormal_traffic|10.10.10.30",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 15,
+      "rule_version": 2,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "threshold": 1000000,
+        "crossed_at": 1794172207.196513,
+        "window_seconds": 10,
+        "avg_bytes_per_second": 1487693,
+        "peak_bytes_per_second": 4326000
+      },
+      "created": 1794172207.198122,
+      "detected": 1794172207.196513,
+      "alerts": 1
+    },
+    {
+      "id": 7,
+      "dedup_key": "auth_failures|10.10.10.30",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 2,
+      "rule_version": 1,
+      "src": "10.10.10.30",
+      "is_open": true,
+      "evidence": {
+        "failures": 6,
+        "threshold": 5,
+        "crossed_at": 1794172210.7283976,
+        "window_seconds": 60
+      },
+      "created": 1794172210.854878,
+      "detected": 1794172210.728398,
+      "alerts": 1
+    }
+  ],
+  "scenario": [
+    {
+      "label": "20 HTTP GETs to :8080",
+      "ns": "ng-normal",
+      "rc": 0,
+      "seconds": 0.04,
+      "tail": ""
+    },
+    {
+      "label": "10 DNS lookups + 30 UDP",
+      "ns": "ng-normal",
+      "rc": 0,
+      "seconds": 0.03,
+      "tail": ""
+    },
+    {
+      "label": "ping x5",
+      "ns": "ng-normal",
+      "rc": 0,
+      "seconds": 0.82,
+      "tail": "icmp_seq=3 ttl=64 time=0.038 ms\n64 bytes from 10.10.10.10: icmp_seq=4 ttl=64 time=0.061 ms\n64 bytes from 10.10.10.10: icmp_seq=5 ttl=64 time=0.127 ms\n\n--- 10.10.10.10 ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 819ms\nrtt min/avg/max/mdev = 0.035/0.065/0.127/0.033 ms"
+    },
+    {
+      "label": "nmap -sS -p 1-1000",
+      "ns": "ng-attacker",
+      "rc": 0,
+      "seconds": 0.16,
+      "tail": "7.94SVN ( https://nmap.org ) at 2026-11-09 00:10 EAT\nNmap scan report for 10.10.10.10\nHost is up (0.0000030s latency).\nNot shown: 999 closed tcp ports (reset)\nPORT   STATE SERVICE\n22/tcp open  ssh\nMAC Address: 82:BA:C7:82:7F:BC (Unknown)\n\nNmap done: 1 IP address (1 host up) scanned in 0.12 seconds"
+    },
+    {
+      "label": "150-connection flood to :9002",
+      "ns": "ng-attacker",
+      "rc": 0,
+      "seconds": 0.03,
+      "tail": ""
+    },
+    {
+      "label": "DNS burst (120 names + 60-char label)",
+      "ns": "ng-attacker",
+      "rc": 0,
+      "seconds": 0.03,
+      "tail": ""
+    },
+    {
+      "label": "UDP volume, paced 3000 pps x 5 s (~21 MB)",
+      "ns": "ng-attacker",
+      "rc": 0,
+      "seconds": 5.04,
+      "tail": ""
+    },
+    {
+      "label": "ssh login attempt 1 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.17,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    },
+    {
+      "label": "ssh login attempt 2 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.16,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    },
+    {
+      "label": "ssh login attempt 3 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.18,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    },
+    {
+      "label": "ssh login attempt 4 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.16,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    },
+    {
+      "label": "ssh login attempt 5 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.15,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    },
+    {
+      "label": "ssh login attempt 6 with wrong password",
+      "ns": "ng-attacker",
+      "rc": 5,
+      "seconds": 0.16,
+      "tail": "Warning: Permanently added '10.10.10.10' (ED25519) to the list of known hosts.\nPermission denied, please try again."
+    }
+  ],
+  "alerts_total": 8,
+  "problems": [],
+  "monitor_log_tail": [
+    "2026-11-09 00:09:52,609 WARNING monitor netguard_monitor.service: running as root; prefer a non-root user holding only CAP_NET_RAW/NET_ADMIN",
+    "2026-11-09 00:09:52,706 INFO monitor netguard_monitor.service: capturing on br-lab (authorised 10.10.10.0/24, rcvbuf 16777216 bytes, promiscuous=False)",
+    "2026-11-09 00:09:52,715 INFO monitor netguard_monitor.service: detection rules loaded: {'port_scan': 'on', 'excessive_connections': 'on', 'auth_failures': 'on', 'abnormal_traffic': 'on', 'suspicious_dns': 'on'}",
+    "2026-11-09 00:10:15,063 INFO monitor netguard_monitor.service: stopped: captured=17837 kernel_drops=0 queue_drops=0 written=19 spilled=0 parse={'malformed': 0, 'non_ip': 0, 'out_of_scope': 0, 'parsed': 17829}"
+  ]
+}

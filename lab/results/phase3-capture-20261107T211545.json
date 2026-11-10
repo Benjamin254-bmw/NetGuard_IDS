@@ -1,0 +1,106 @@
+{
+  "least_privilege": true,
+  "active_discovery": true,
+  "results": [
+    {
+      "check": "UDP attacker->victim:9001",
+      "sent": 300,
+      "tcpdump": 300,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "TCP SYN attacker->victim:9002",
+      "sent": 100,
+      "tcpdump": 100,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "TCP attacker->victim:9002 (all packets)",
+      "sent": null,
+      "tcpdump": 100,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "TCP RST victim->attacker",
+      "sent": 100,
+      "tcpdump": 100,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "DNS normal->victim:53",
+      "sent": 50,
+      "tcpdump": 50,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "ICMP echo normal->victim",
+      "sent": 20,
+      "tcpdump": 20,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "ICMP echo reply victim->normal",
+      "sent": 20,
+      "tcpdump": 20,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "tcp/udp/icmp packets, all flows (per-second table)",
+      "sent": null,
+      "tcpdump": 590,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "tcp/udp/icmp packets, all flows (per-flow table)",
+      "sent": null,
+      "tcpdump": 590,
+      "monitor": 0,
+      "pass": false
+    },
+    {
+      "check": "no packets dropped; clean shutdown",
+      "sent": null,
+      "tcpdump": 0,
+      "monitor": 0,
+      "pass": true
+    },
+    {
+      "check": "devices vs nmap -sn (active discovery)",
+      "sent": [
+        "10.10.10.1",
+        "10.10.10.10",
+        "10.10.10.20",
+        "10.10.10.30"
+      ],
+      "tcpdump": [
+        "10.10.10.1",
+        "10.10.10.10",
+        "10.10.10.20",
+        "10.10.10.30"
+      ],
+      "monitor": [],
+      "pass": false
+    }
+  ],
+  "heartbeat": [
+    "stopped",
+    "1369",
+    "0"
+  ],
+  "monitor_log_tail": [
+    "    ~~~~~~~~^^",
+    "  File \"/home/bmw/.local/share/Trash/files/netguard-ids/monitor/netguard_monitor/persistence/writer.py\", line 261, in run",
+    "    self._handle(item)",
+    "    ~~~~~~~~~~~~^^^^^^",
+    "TypeError: '_thread._ThreadHandle' object is not callable",
+    "2026-11-07 21:15:45,336 INFO monitor netguard_monitor.service: stopped: captured=1369 kernel_drops=0 queue_drops=0 written=0 spilled=0 parse={'malformed': 0, 'non_ip': 0, 'out_of_scope': 0, 'parsed': 590}"
+  ]
+}
