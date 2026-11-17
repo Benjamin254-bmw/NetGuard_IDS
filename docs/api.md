@@ -5,6 +5,11 @@ Base path `/api`. JSON in, JSON out. Interactive docs (`/docs`) exist only when 
 ADR 0005 / `docs/database-schema.md` for what that role may touch).
 
 Run: `make run-api` (host/port from `NETGUARD_API_HOST` / `NETGUARD_API_PORT`, default 127.0.0.1:8000).
+In production it runs as the `netguard-api` service behind nginx on one HTTPS origin (`docs/deployment.md`).
+
+**Client addresses.** The login limiter and the audit log use the client address. `X-Forwarded-For` and
+`X-Forwarded-Proto` are honoured only from loopback (the local nginx, which overwrites them); this is pinned in
+`app/__main__.py` (ADR 0020). A remote peer cannot set its address; a local process on the API port can.
 First user: `make create-admin USERNAME=name` (password is prompted for, never on the command line).
 
 ## Authentication

@@ -67,7 +67,27 @@ describe('header status', () => {
     expect(never.level).toBe('never')
     expect(never.current).toBe(false)
   })
-  it('never reports current data unless the level is live or degraded', () => {
+  it('flags a running monitor whose packet count has not moved for two minutes', () => {
+    const d = deriveStatus(base({ lastCaptureAt: NOW - 125_000 }))
+    expect(d.level).toBe('quiet')
+    expect(d.current).toBe(true) // the data is current; there is just none
+    expect(d.title).toContain('br-lab')
+    expect(d.detail).toMatch(/2 min/)
+    expect(d.detail).toContain('NETGUARD_PROMISCUOUS')
+  })
+  it('stays live while packets keep arriving, and before anything has been observed', () => {
+    expect(deriveStatus(base({ lastCaptureAt: NOW - 119_000 })).level).toBe('live')
+    expect(deriveStatus(base({ lastCaptureAt: null })).level).toBe('live')
+    expect(deriveStatus(base()).level).toBe('live')
+  })
+  it('reports worse states before quiet', () => {
+    const old = NOW - 600_000
+    expect(deriveStatus(base({ lastCaptureAt: old, monitor: mon({ effective_state: 'stale' }) })).level).toBe('silent')
+    expect(deriveStatus(base({ lastCaptureAt: old, feed: 'closed' })).level).toBe('disconnected')
+    const deg = mon({ effective_state: 'degraded', degraded_reasons: ['capture error'] })
+    expect(deriveStatus(base({ lastCaptureAt: old, monitor: deg })).level).toBe('degraded')
+  })
+  it('never reports current data unless the level is live, quiet or degraded', () => {
     const cases: Partial<Inputs>[] = [
       { feed: 'closed' },
       { apiReachable: false },

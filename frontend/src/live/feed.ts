@@ -24,6 +24,9 @@ export interface Snapshot {
   feed: FeedState
   monitor: MonitorStatus | null
   receivedAt: number | null
+  /** when `packets_captured` last changed, or was first seen (ms): a running monitor that captures
+   *  nothing would otherwise look exactly like a healthy one (status.ts, "no packets") */
+  capturedChangedAt: number | null
   alerts: Alert[] // newest first, at most MAX_ALERTS
   /** when each alert arrived by push (ms); alerts loaded from REST have no entry */
   pushedAt: Record<number, number>
@@ -45,6 +48,7 @@ export class LiveFeed {
     feed: 'connecting',
     monitor: null,
     receivedAt: null,
+    capturedChangedAt: null,
     alerts: [],
     pushedAt: {},
     authLost: false,
@@ -148,9 +152,17 @@ export class LiveFeed {
       case 'alert':
         this.addAlerts([msg.alert], true)
         break
-      case 'monitor':
-        this.set({ monitor: msg.status, receivedAt: this.deps.now() })
+      case 'monitor': {
+        const at = this.deps.now()
+        const moved = msg.status.packets_captured !== this.snap.monitor?.packets_captured
+        const changed = moved || this.snap.capturedChangedAt === null
+        this.set({
+          monitor: msg.status,
+          receivedAt: at,
+          capturedChangedAt: changed ? at : this.snap.capturedChangedAt,
+        })
         break
+      }
       case 'resync':
         void this.sync()
         break

@@ -1,6 +1,6 @@
 .RECIPEPREFIX := >
 PY := .venv/bin/python
-.PHONY: doctor monitor-check monitor-run test-capture verify-capture verify-capture-active verify-detection verify-detection-standin eval-plan eval-reset eval-smoke eval-tuning eval-evaluation eval-capacity e2e-latency stack-resources scale-db-up scale-db-down seed-scale stack-api-scale bench-parser run-api create-admin migrate migrate-check migration docs-schema setup init-env db-init check-db lab-up lab-down lab-status lab-verify test test-integration lint typecheck frontend-install frontend-build frontend-dev frontend-test frontend-lint freeze
+.PHONY: doctor monitor-check monitor-run test-capture verify-capture verify-capture-active verify-detection verify-detection-standin eval-plan eval-reset eval-smoke eval-tuning eval-evaluation eval-capacity e2e-latency stack-resources scale-db-up scale-db-down seed-scale stack-api-scale bench-parser run-api create-admin migrate migrate-check migration docs-schema setup init-env db-init check-db lab-up lab-down lab-status lab-verify test test-integration lint typecheck frontend-install frontend-build frontend-dev frontend-test frontend-lint freeze deploy-install deploy-verify deploy-remove
 
 setup:
 > @if [ -f .venv/bin/pip ] && ! head -1 .venv/bin/pip | grep -qF "$(CURDIR)/.venv/bin/python"; then echo 'virtualenv was created in another location (project moved or copied): rebuilding it'; rm -rf .venv; fi
@@ -144,3 +144,11 @@ frontend-lint:
 
 freeze:
 > $(PY) -m pip freeze --exclude-editable > requirements.lock
+
+# Phase 8: install as system services (nginx HTTPS + systemd); see docs/deployment.md
+deploy-install:
+> sudo deploy/install.sh
+deploy-verify:
+> sudo deploy/verify.sh
+deploy-remove:
+> sudo deploy/uninstall.sh

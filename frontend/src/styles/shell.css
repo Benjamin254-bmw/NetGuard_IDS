@@ -19,7 +19,7 @@
 .status-title { font-weight: 650; line-height: 1.2; }
 .status-detail { font-size: var(--step--1); color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status[data-level='live'] { color: var(--sea); }
-.status[data-level='degraded'] { color: var(--warn); }
+.status[data-level='degraded'], .status[data-level='quiet'] { color: var(--warn); }
 .status[data-level='starting'], .status[data-level='connecting'] { color: var(--ink-soft); }
 .status[data-level='silent'], .status[data-level='disconnected'], .status[data-level='unreachable'] { color: var(--danger); }
 .status[data-level='never'] { color: var(--ink-faint); }

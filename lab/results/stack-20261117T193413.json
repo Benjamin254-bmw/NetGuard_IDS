@@ -1,0 +1,255 @@
+{
+  "phases": {
+    "idle": {
+      "monitor": {
+        "samples": 58,
+        "cpu_median": 0.0,
+        "cpu_p95": 1.0,
+        "cpu_max": 1.0,
+        "mem_mb_median": 51.9,
+        "mem_mb_max": 51.9
+      },
+      "api": {
+        "samples": 58,
+        "cpu_median": 0.0,
+        "cpu_p95": 1.0,
+        "cpu_max": 1.0,
+        "mem_mb_median": 69.8,
+        "mem_mb_max": 69.8
+      },
+      "postgres": {
+        "samples": 58,
+        "cpu_median": 0.0,
+        "cpu_p95": 1.0,
+        "cpu_max": 1.9,
+        "mem_mb_median": 61.4,
+        "mem_mb_max": 61.5
+      }
+    },
+    "clients": {
+      "monitor": {
+        "samples": 57,
+        "cpu_median": 0.0,
+        "cpu_p95": 1.0,
+        "cpu_max": 1.0,
+        "mem_mb_median": 51.9,
+        "mem_mb_max": 51.9
+      },
+      "api": {
+        "samples": 57,
+        "cpu_median": 1.0,
+        "cpu_p95": 4.0,
+        "cpu_max": 5.7,
+        "mem_mb_median": 70.2,
+        "mem_mb_max": 70.2
+      },
+      "postgres": {
+        "samples": 57,
+        "cpu_median": 0.0,
+        "cpu_p95": 2.2,
+        "cpu_max": 3.9,
+        "mem_mb_median": 62.3,
+        "mem_mb_max": 62.4
+      }
+    },
+    "load": {
+      "monitor": {
+        "samples": 58,
+        "cpu_median": 52.4,
+        "cpu_p95": 59.9,
+        "cpu_max": 62.5,
+        "mem_mb_median": 51.9,
+        "mem_mb_max": 52.0
+      },
+      "api": {
+        "samples": 58,
+        "cpu_median": 1.0,
+        "cpu_p95": 4.7,
+        "cpu_max": 5.7,
+        "mem_mb_median": 70.1,
+        "mem_mb_max": 70.2
+      },
+      "postgres": {
+        "samples": 58,
+        "cpu_median": 0.9,
+        "cpu_p95": 2.0,
+        "cpu_max": 3.6,
+        "mem_mb_median": 62.5,
+        "mem_mb_max": 62.5
+      }
+    }
+  },
+  "api_response": {
+    "idle": {
+      "/api/overview": {
+        "n": 50,
+        "p50": 9.2,
+        "p95": 13.2,
+        "max": 19.7,
+        "non_200": 0
+      },
+      "/api/monitor/status": {
+        "n": 50,
+        "p50": 4.7,
+        "p95": 5.6,
+        "max": 6.2,
+        "non_200": 0
+      },
+      "/api/traffic/series": {
+        "n": 50,
+        "p50": 5.9,
+        "p95": 6.8,
+        "max": 7.2,
+        "non_200": 0
+      },
+      "/api/traffic/protocols": {
+        "n": 50,
+        "p50": 6.3,
+        "p95": 8.6,
+        "max": 9.0,
+        "non_200": 0
+      },
+      "/api/traffic/top-talkers": {
+        "n": 50,
+        "p50": 8.3,
+        "p95": 14.1,
+        "max": 14.5,
+        "non_200": 0
+      },
+      "/api/devices": {
+        "n": 50,
+        "p50": 7.8,
+        "p95": 8.8,
+        "max": 9.3,
+        "non_200": 0
+      },
+      "/api/events": {
+        "n": 50,
+        "p50": 7.3,
+        "p95": 13.6,
+        "max": 15.0,
+        "non_200": 0
+      },
+      "/api/alerts": {
+        "n": 50,
+        "p50": 6.1,
+        "p95": 8.6,
+        "max": 9.3,
+        "non_200": 0
+      },
+      "/api/rules": {
+        "n": 50,
+        "p50": 4.9,
+        "p95": 7.8,
+        "max": 8.1,
+        "non_200": 0
+      }
+    },
+    "under_load": {
+      "/api/overview": {
+        "n": 50,
+        "p50": 7.2,
+        "p95": 13.4,
+        "max": 18.6,
+        "non_200": 0
+      },
+      "/api/monitor/status": {
+        "n": 50,
+        "p50": 4.8,
+        "p95": 6.1,
+        "max": 7.7,
+        "non_200": 0
+      },
+      "/api/traffic/series": {
+        "n": 50,
+        "p50": 5.5,
+        "p95": 6.7,
+        "max": 7.1,
+        "non_200": 0
+      },
+      "/api/traffic/protocols": {
+        "n": 50,
+        "p50": 5.3,
+        "p95": 6.1,
+        "max": 7.3,
+        "non_200": 0
+      },
+      "/api/traffic/top-talkers": {
+        "n": 50,
+        "p50": 7.8,
+        "p95": 10.0,
+        "max": 11.7,
+        "non_200": 0
+      },
+      "/api/devices": {
+        "n": 50,
+        "p50": 5.5,
+        "p95": 6.7,
+        "max": 7.3,
+        "non_200": 0
+      },
+      "/api/events": {
+        "n": 50,
+        "p50": 5.9,
+        "p95": 7.2,
+        "max": 7.5,
+        "non_200": 0
+      },
+      "/api/alerts": {
+        "n": 50,
+        "p50": 5.7,
+        "p95": 6.5,
+        "max": 6.9,
+        "non_200": 0
+      },
+      "/api/rules": {
+        "n": 50,
+        "p50": 5.1,
+        "p95": 6.5,
+        "max": 7.1,
+        "non_200": 0
+      }
+    },
+    "load_driver": {
+      "packets": 138696,
+      "seconds": 24.99,
+      "achieved_mbps": 8.0
+    }
+  },
+  "load_driver": {
+    "packets": 332871,
+    "seconds": 59.99,
+    "achieved_mbps": 8.0
+  },
+  "clients": {
+    "count": 5,
+    "requests": 183,
+    "ws_messages": 135,
+    "errors": []
+  },
+  "when": "2026-11-17T19:34:13.602381+00:00",
+  "host": "kali",
+  "kernel": "6.19.14+kali-amd64",
+  "python": "3.13.12",
+  "cpus": 4,
+  "ram_mb": 8236,
+  "memory_figure": "PSS",
+  "udp_mbps": 8.0,
+  "phase_seconds": 60,
+  "packets_captured_during_run": 455163,
+  "packets_dropped_during_run": 0,
+  "row_counts": {
+    "database": "netguard",
+    "traffic_stats_1s": 148,
+    "connection_aggregates_1m": 6714,
+    "devices": 8,
+    "security_events": 130,
+    "alerts": 132,
+    "audit_logs": 27
+  },
+  "notes": [
+    "CPU is percent of one core; memory is PSS when readable, else RSS (see memory_figure)",
+    "idle = no dashboard and no lab traffic; the monitor still captures whatever reaches the bridge",
+    "single machine, single lab; not a statement about other networks or other hardware"
+  ]
+}

@@ -62,7 +62,13 @@ def tx(request: Request) -> Iterator[Connection]:
 
 
 def client_ip(request: Request) -> str | None:
-    """Direct peer address only. X-Forwarded-For is deliberately not trusted (it is spoofable)."""
+    """The client address as uvicorn reports it.
+
+    X-Forwarded-For is honoured only when the peer is the local reverse proxy (loopback, see
+    ``app.__main__.TRUSTED_PROXIES``); a remote client cannot set its own address. The proxy must
+    overwrite the header with the real peer (deploy/nginx does). A local process talking to the API
+    port directly can claim any address: on a shared machine, treat these addresses as advisory.
+    """
     host = request.client.host if request.client else None
     try:
         return str(ip_address(host)) if host else None

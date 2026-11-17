@@ -26,6 +26,7 @@ let timers: { fn: () => void; ms: number; live: boolean }[]
 let loads: (number | undefined)[]
 let store: Alert[]
 let gate: (() => void) | null
+let clock = 1000
 
 function make() {
   const deps: Deps = {
@@ -36,7 +37,7 @@ function make() {
       if (gate) await new Promise<void>((r) => { const g = gate; gate = () => { g?.(); r() } })
       return store.filter((a) => after === undefined || a.id > after)
     },
-    now: () => 1000,
+    now: () => clock,
     setTimer: (fn, ms) => { const t = { fn, ms, live: true }; timers.push(t); return t },
     clearTimer: (h) => { (h as { live: boolean }).live = false },
   }
@@ -45,7 +46,7 @@ function make() {
 const flush = () => new Promise((r) => setTimeout(r, 0))
 const reconnectTimer = () => timers.filter((t) => t.live && t.ms >= 1000 && t.ms <= 15000).at(-1)
 
-beforeEach(() => { sockets = []; timers = []; loads = []; store = []; gate = null })
+beforeEach(() => { sockets = []; timers = []; loads = []; store = []; gate = null; clock = 1000 })
 
 describe('LiveFeed', () => {
   it('goes open on connect and loads the initial alerts from REST', async () => {
@@ -84,6 +85,19 @@ describe('LiveFeed', () => {
     sockets[0].push({ type: 'monitor', status: { state: 'running', effective_state: 'running' } })
     expect(f.getSnapshot().monitor?.state).toBe('running')
     expect(f.getSnapshot().receivedAt).toBe(1000)
+  })
+
+  it('records when the packet counter last moved, for the "no packets" header state', () => {
+    const f = make(); f.start(); sockets[0].open()
+    const status = (n: number) => ({ type: 'monitor', status: { state: 'running', effective_state: 'running', packets_captured: n } })
+    sockets[0].push(status(8))
+    expect(f.getSnapshot().capturedChangedAt).toBe(1000) // first sight counts as a change
+    clock = 6000; sockets[0].push(status(8))
+    expect(f.getSnapshot().capturedChangedAt).toBe(1000) // unchanged count: keep the old time
+    clock = 11000; sockets[0].push(status(9))
+    expect(f.getSnapshot().capturedChangedAt).toBe(11000)
+    clock = 16000; sockets[0].push(status(3)) // a restarted monitor counts from zero: also a change
+    expect(f.getSnapshot().capturedChangedAt).toBe(16000)
   })
 
   it('backfills from the newest known id on resync and on a hello that reports newer alerts', async () => {

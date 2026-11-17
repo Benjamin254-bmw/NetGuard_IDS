@@ -4,7 +4,7 @@ Lightweight network monitoring and rule-based intrusion detection for small netw
 (fourth-year Computer Technology project). Defensive tool: monitor only networks you own or are
 explicitly authorised to monitor.
 
-**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurement tools (end-to-end latency, whole-stack cost, API at scale, accessibility audit) are built and run in the sandbox; the Kali runs are still to be recorded (`docs/evaluation.md`).**
+**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurement tools (end-to-end latency, whole-stack cost, API at scale, accessibility audit, parser benchmark) are built and run in the sandbox; on Kali the parser benchmark is recorded and the other runs are pending (`docs/evaluation.md`). Phase 8 (deployment as systemd services behind nginx on HTTPS, `docs/deployment.md`) is built; its install on Kali is pending.**
 See `docs/CHECKLIST.md` for exactly what is and is not done.
 
 ## Layout
@@ -12,9 +12,10 @@ See `docs/CHECKLIST.md` for exactly what is and is not done.
 |---|---|
 | `shared/netguard_common` | Settings, logging, DB engine/diagnostics shared by API and monitor |
 | `backend/app` | FastAPI API: auth, users, monitoring data, rules, WebSocket (`docs/api.md`) |
-| `monitor/netguard_monitor` | Monitoring service (environment self-check only so far) |
+| `monitor/netguard_monitor` | Monitoring service: capture, discovery, detection rules (`docs/monitor.md`) |
 | `frontend` | React + TypeScript dashboard (`docs/dashboard.md`) |
-| `lab/` | Isolated test lab (`setup_lab.sh`) and, later, the evaluation harness |
+| `lab/` | Isolated test lab (`setup_lab.sh`), evaluation and measurement harnesses |
+| `deploy/` | Production install: systemd units, nginx HTTPS site, install/verify/remove scripts (`docs/deployment.md`) |
 | `scripts/` | `init_env.sh`, `db_init.sh`, `run-with-caps.sh` |
 | `docs/adr` | Architecture decision records |
 
@@ -86,7 +87,7 @@ Three DB roles: `netguard_migrator` (owns schema, runs migrations), `netguard_mo
 sudo scripts/run-with-caps.sh .venv/bin/python -m netguard_monitor.main check
 ```
 This runs the command as **your** user holding only `CAP_NET_RAW` and `CAP_NET_ADMIN`.
-For deployment use a dedicated user and a systemd unit with `AmbientCapabilities` (Phase 8).
+For deployment `make deploy-install` creates a dedicated user and a systemd unit with `AmbientCapabilities` (Phase 8, `docs/deployment.md`).
 Lab setup (`lab/setup_lab.sh`) needs root once to create interfaces; the monitor does not.
 
 ## Lab safety
@@ -94,6 +95,14 @@ The lab is a local bridge (`br-lab`, 10.10.10.0/24) with three namespaces (`ng-v
 `ng-normal` .20, `ng-attacker` .30). It has no uplink, no NAT and no routing to other networks.
 Never run test tools against anything outside it. Do not enable the system `ssh` service for lab
 use; the victim sshd (Phase 4) runs inside the namespace only.
+
+## Deployment (Phase 8)
+Run NetGuard as system services with the dashboard on HTTPS. Guide: `docs/deployment.md`; decisions: ADR 0020.
+```bash
+make deploy-install    # sudo: users, /opt/netguard, /etc/netguard (secrets, self-signed cert), nginx site, systemd units
+make deploy-verify     # sudo: services, loopback-only API, headers, TLS, process privileges, secret files
+make deploy-remove     # sudo: removes services and code; keeps /etc/netguard and the database
+```
 
 ## Troubleshooting
 **First, run `make doctor`.** It checks, read-only: the real working directory (not the Trash), that the
@@ -134,5 +143,5 @@ mirror. Do not run `apt autoremove` while python3.13 is listed as removable: `.v
 
 ## Known limitations
 - Tested on **Python 3.12 and 3.13** (3.13 matters: it added private `Thread` attributes that broke an earlier version of the writer, invisible on 3.12) with PostgreSQL 18. Always run `make test-integration` on your own machine.
-- `requirements.lock` is not generated yet; run `make freeze` once the install works on your machine.
+- `requirements.lock` pins the versions the deployment installs (`make freeze` after changing dependencies).
 - Starlette's TestClient prints a deprecation warning about `httpx`; harmless.

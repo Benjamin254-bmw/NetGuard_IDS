@@ -1,0 +1,45 @@
+# NetGuard IDS API (Phase 8). Installed by deploy/install.sh; see docs/deployment.md.
+# Listens on loopback only; nginx (deploy/nginx/netguard.conf) is the only way in, over HTTPS.
+[Unit]
+Description=NetGuard IDS API
+Documentation=file:///opt/netguard/docs/deployment.md
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=exec
+User=netguard-api
+Group=netguard-api
+# Read by systemd (root) and passed as environment: the service user never needs to read the file.
+EnvironmentFile=/etc/netguard/api.env
+WorkingDirectory=/opt/netguard
+ExecStart=/opt/netguard/venv/bin/python -m app
+Restart=on-failure
+RestartSec=3
+
+# No privileges at all: no capabilities, nothing writable except its own temp dir.
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

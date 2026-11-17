@@ -10,7 +10,10 @@ own machine, absolute numbers will differ):
 - netguard parser: 397,129 frames/s
 - Scapy `Ether(b)[IP].src`: 8,395 frames/s (47x slower)
 - Scapy src/dst/port extraction: 8,011 frames/s (50x slower)
-A Scapy sniffer would cap this monitor near 8,000 frames/s per core before any analysis, losing
+Re-run on the Kali laptop (Intel i7-4500U, Python 3.13.12, 2026-11-17, three runs): netguard parser
+234,013-249,860 frames/s; Scapy `Ether(b)[IP].src` 4,270-4,313 (55-58x slower); Scapy src/dst/port
+3,960-4,025 (58-63x slower). The ratio holds on the slower CPU; both absolute rates are lower.
+A Scapy sniffer would cap this monitor near 8,000 frames/s per core (about 4,000 on the laptop) before any analysis, losing
 packets on a busy small network. The parser is checked against Scapy-built frames, every
 truncation of every frame, and 40,000 random inputs (it must never raise).
 

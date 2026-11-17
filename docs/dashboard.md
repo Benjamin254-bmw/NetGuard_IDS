@@ -28,13 +28,16 @@ Admin pages are hidden from analysts and refused by the server for them (see `te
 
 ## The header status
 The header always says whether NetGuard is watching. It shows one of: monitoring (live), monitoring with
-problems (reasons from the monitor), starting, not responding, has not started, live feed disconnected,
-cannot reach NetGuard, connecting. Only the first two are "live". In every other state a banner explains why,
+no packets, monitoring with problems (reasons from the monitor), starting, not responding, has not started,
+live feed disconnected, cannot reach NetGuard, connecting. Only the first three are "live". In every other state a banner explains why,
 the page tint changes, and the pulse line stops moving. Rules (`frontend/src/live/status.ts`, unit-tested):
 - live needs an open feed, a monitor status received in the last 20 s, and a heartbeat under 15 s old, counting
   the time since the status arrived in the browser;
 - a socket that is open but silent counts as disconnected;
-- the monitor's own `stale`/`stopped` states are shown as "not responding".
+- the monitor's own `stale`/`stopped` states are shown as "not responding";
+- "no packets" (Phase 8, amber, flat pulse): the monitor is live but its packet count has not moved for two
+  minutes of watching. On a real network something always arrives, so this usually means the wrong interface
+  or promiscuous mode off on a bridge or mirror port (the Phase 6 Kali defect). An idle lab shows it legitimately.
 
 ## Live alerts
 `frontend/src/live/feed.ts` keeps one WebSocket. It reconnects with growing delays (1 s up to 15 s). After a
@@ -56,8 +59,8 @@ a 390 px wide phone viewport has no horizontal scroll. Screenshots were reviewed
 - Charts are drawn by hand in SVG: one traffic series, two segment bars. No zoom or custom ranges yet.
 - No dark-mode toggle (follows the system setting).
 - Treat colour-contrast and screen-reader behaviour as reviewed by hand, not audited with a tool.
-- A production build (`make frontend-build`) must be served from the same origin as the API behind a reverse
-  proxy with HTTPS; that deployment is not set up (Phase 8).
+- Production serving: `make deploy-install` serves the build from the same HTTPS origin as the API through
+  nginx (`docs/deployment.md`, ADR 0020).
 
 ## Accessibility
 Automated audit (axe-core, 36 views: every page, the login page and a dialog, light and dark, desktop and phone):

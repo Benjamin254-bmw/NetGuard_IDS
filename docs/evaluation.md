@@ -17,7 +17,7 @@ The runner adds one source address per trial to the lab interfaces and removes t
 Run with `sudo` from your normal user: the monitor itself then runs non-root with only
 CAP_NET_RAW and CAP_NET_ADMIN. The full tuning run takes about 20 min, the evaluation split about 40 min.
 
-## Kali results (ThinkPad X390, non-root monitor): THE FIGURES TO QUOTE
+## Kali results (Lenovo ThinkPad S1 Yoga, Intel Core i7-4500U, 2 cores / 4 threads, 8 GB; non-root monitor): THE FIGURES TO QUOTE
 Source: output of `make eval-reset && make eval-tuning`, `evaluate.py freeze`, `make eval-evaluation`, `make eval-capacity`
 on 2026-11-10; run directories on the Kali machine: `lab/results/eval-tuning-20261110T155001`,
 `eval-evaluation-20261110T161321`, `capacity-20261110T165613.json`. Same plan hash `fdf34579bc5f...`, same frozen
@@ -39,7 +39,7 @@ Known misses: UDP, FIN, NULL, Xmas and slow scans, 0 of 20 detected (4 trials ea
 Resources during the evaluation: 3,209,576 packets captured, **0 kernel drops**; monitor CPU median 1%, p95 69%,
 max 88% (of one core; higher than in the sandbox, driven by the 6-16 MB/s UDP trials); memory 72-73 MB.
 
-Capacity on the X390 (sustained = 0 kernel drops and >= 99.9% captured):
+Capacity on the ThinkPad S1 Yoga (sustained = 0 kernel drops and >= 99.9% captured):
 | load | packets sent | captured | kernel drops | captured | CPU % median / max | RSS MB max | sustained |
 |---|---|---|---|---|---|---|---|
 | UDP 1 MB/s | 10,402 | 10,404 | 0 | 100.0% | 10 / 11 | 68.6 | yes |
@@ -55,9 +55,9 @@ Capacity on the X390 (sustained = 0 kernel drops and >= 99.9% captured):
 | TCP 1000 conn/s | 20,000 | 20,002 | 0 | 100.0% | 38 / 41 | 74.4 | yes |
 | TCP 3000 conn/s | 60,000 | 60,002 | 0 | 100.0% | 62 / 77 | 79.6 | yes |
 
-Highest tested lossless load on the X390: **32 MB/s UDP (about 22,000 packets/s) and 3,000 new TCP connections/s**.
+Highest tested lossless load on the ThinkPad S1 Yoga: **32 MB/s UDP (about 22,000 packets/s) and 3,000 new TCP connections/s**.
 At 64 MB/s it loses 44% of packets and at 128 MB/s 75%, all counted by the kernel drop counter. CPU over 100% means
-more than one core is in use. The X390 handles less than the sandbox at the same rate (sandbox lost 12% at 64 MB/s).
+more than one core is in use. The laptop handles less than the sandbox at the same rate (sandbox lost 12% at 64 MB/s).
 The 250 evaluation trials never exceeded 16 MB/s. Detection quality under packet loss was not evaluated.
 
 ## Sandbox lab results (corroborating run, 2-vCPU cloud sandbox)
@@ -118,7 +118,7 @@ Highest tested sustained load: **32 MB/s of UDP (about 22,000 packets/s) and 3,0
 no loss. At 64 MB/s the single capture process saturates one core (about 89%) and the kernel drops 12% of
 packets (counted and reported by the monitor, not hidden); at 128 MB/s it drops 42%. Detection under packet
 loss is not evaluated. These figures are for this sandbox's CPU; **rerun `sudo python lab/capacity.py` on
-the ThinkPad X390 before quoting capacity for it.** The sender is Python, which is why very high rates
+the ThinkPad S1 Yoga before quoting capacity for it.** The sender is Python, which is why very high rates
 were not tested.
 
 ## Defect found while building the harness
@@ -130,9 +130,65 @@ demos had passed only because their tcpdump oracle switched promiscuous mode on.
 
 
 ## Phase 7: end-to-end latency, whole-stack cost, API at scale, accessibility
-Sandbox figures below are real runs of the real monitor, API, PostgreSQL and WebSocket in the 2-vCPU, 8 GB
-cloud sandbox (kernel 6.18). They corroborate; **the Kali figures are the ones to quote** and are still to be
-recorded (see the end of this section). Design and definitions: ADR 0019. Raw results: `lab/results/`.
+Design and definitions: ADR 0019. Raw results: `lab/results/`. **The Kali figures (next subsection) are the
+ones to quote**; the numbered sandbox sections after them are real runs of the same software in the 2-vCPU,
+8 GB cloud sandbox (kernel 6.18) and corroborate them.
+
+### Kali figures (ThinkPad S1 Yoga, i7-4500U, Kali kernel 6.19.14, Python 3.13.12, 2026-11-17): THE ONES TO QUOTE
+Monitor non-root with only CAP_NET_RAW and CAP_NET_ADMIN on `br-lab` (promiscuous), API and PostgreSQL 18 on
+the same laptop, the dashboard dev server and one browser session open during the runs.
+
+**Alert latency** (`lab/e2e_latency.py`; 30 trials, 40-port `nmap -sS` from a fresh source address each time;
+source `e2e-20261117T193022.json`). 30/30 alerts received on the WebSocket, 0 invalid. Seconds:
+
+| step | median | p95 | max |
+|---|---|---|---|
+| scan process itself (included in the total) | 0.189 | 0.224 | 0.231 |
+| scan start -> alert row written | 0.534 | 0.741 | 0.745 |
+| alert row -> received on the WebSocket | 0.024 | 0.246 | 0.249 |
+| **scan start -> alert on the WebSocket** | **0.561** | **0.776** | **0.988** |
+
+Reading: a scan reaches a connected dashboard in about half a second, under one second in every trial. The
+"alert row written" times fall in three groups (about 0.34, 0.53 and 0.74 s; 3, 21 and 6 trials). The steps of
+about 0.2 s match the monitor's main loop on an idle lab: it waits up to 0.2 s for a packet and evaluates rules
+every 0.5 s (`service.py`), so detection lands on one of a few ticks after the threshold is crossed. Delivery
+from the database to the browser socket took 19-28 ms in 27 trials and about 0.245 s in 3; the cause of those
+three was not investigated (the step is again about 0.2 s). Compared with the sandbox (median 0.702 s), the
+laptop is faster end to end but has a wider spread.
+
+**What the whole stack costs** (`lab/stack_resources.py`, 60 s per phase; source `stack-20261117T193413.json`).
+CPU is percent of ONE core (median / p95 / max); memory is PSS in MB (median).
+
+| phase | monitor CPU | monitor MB | API CPU | API MB | PostgreSQL CPU | PostgreSQL MB |
+|---|---|---|---|---|---|---|
+| idle (no dashboard clients, no lab traffic) | 0 / 1 / 1 | 51.9 | 0 / 1 / 1 | 69.8 | 0 / 1 / 1.9 | 61.4 |
+| 5 dashboard clients | 0 / 1 / 1 | 51.9 | 1 / 4 / 5.7 | 70.2 | 0 / 2.2 / 3.9 | 62.3 |
+| clients + 8 MB/s UDP | 52.4 / 59.9 / 62.5 | 51.9 | 1 / 4.7 / 5.7 | 70.1 | 0.9 / 2.0 / 3.6 | 62.5 |
+
+455,163 packets captured during the run, 0 dropped. NetGuard's total memory is about 185 MB in the busiest
+phase and does not grow between phases. At 8 MB/s the monitor needs about half of one core on this CPU (the
+sandbox needed 11%; Phase 4B measured 65% at the same rate on this laptop with a different traffic mix). CPU
+per packet depends on packet size and mix, so this figure does not by itself predict the 32 MB/s lossless limit
+measured in Phase 4B with large UDP packets.
+
+**API response times** (same run; 50 requests per endpoint; small tables: 148 per-second rows, 6,714 per-minute
+rows, 130 events, 132 alerts). Milliseconds, p50 / p95 / max:
+
+| endpoint | idle | under 8 MB/s UDP |
+|---|---|---|
+| /api/overview | 9.2 / 13.2 / 19.7 | 7.2 / 13.4 / 18.6 |
+| /api/monitor/status | 4.7 / 5.6 / 6.2 | 4.8 / 6.1 / 7.7 |
+| /api/traffic/series | 5.9 / 6.8 / 7.2 | 5.5 / 6.7 / 7.1 |
+| /api/traffic/protocols | 6.3 / 8.6 / 9.0 | 5.3 / 6.1 / 7.3 |
+| /api/traffic/top-talkers | 8.3 / 14.1 / 14.5 | 7.8 / 10.0 / 11.7 |
+| /api/devices | 7.8 / 8.8 / 9.3 | 5.5 / 6.7 / 7.3 |
+| /api/events | 7.3 / 13.6 / 15.0 | 5.9 / 7.2 / 7.5 |
+| /api/alerts | 6.1 / 8.6 / 9.3 | 5.7 / 6.5 / 6.9 |
+| /api/rules | 4.9 / 7.8 / 8.1 | 5.1 / 6.5 / 7.1 |
+
+Every endpoint the dashboard uses answered within 20 ms, also while the monitor was capturing 8 MB/s.
+The API at retention-sized tables on Kali: see the scale test below (pending).
+Limits as for the sandbox runs: minutes, not hours; one lab; one victim; at most 5 simulated clients.
 
 ### 1. Alert latency, scan start to the dashboard feed (`lab/e2e_latency.py`, sandbox)
 30 trials, each a 40-port `nmap -sS` from a fresh source address, alert received on `/api/ws`.
@@ -164,8 +220,8 @@ achieved 8.0 MB/s).
 
 469,477 packets captured during the run, 0 dropped. Total NetGuard memory is about 180 MB in the busiest phase.
 CPU is sampled once a second, so small values are coarse. Source: `lab/results/stack-20261112T194618.json`.
-Limits: a short run (minutes, not hours); no growth-over-time measurement; the sandbox CPU is not the X390's
-(on the X390 the monitor needed 65% of a core at 8 MB/s in Phase 4B, far more than here).
+Limits: a short run (minutes, not hours); no growth-over-time measurement; the sandbox CPU is not the laptop's
+(on the laptop the monitor needed 65% of a core at 8 MB/s in Phase 4B, far more than here).
 
 ### 3. API response times (`lab/stack_resources.py`, sandbox)
 Milliseconds, 50 requests per endpoint, p50 / p95 / max. With small tables (about 300 and 2,000 rows) and with
@@ -208,6 +264,20 @@ their computed colours were checked directly: 7.5:1 in light theme and 9.0:1 in 
 **Not checked** (automated tools miss these): keyboard-only operation and focus order by hand, a screen reader,
 200% and 400% zoom reflow, reduced-motion behaviour, forced-colours mode. The dialog is the native `<dialog>`
 element (focus trap and Escape come from the browser) but was not tested with assistive technology.
+
+### 5. Parser throughput on the Kali laptop (`lab/bench_parser.py`, Kali, 2026-11-17)
+Same frames for both parsers, 20,000 frames per measurement, three runs, Python 3.13.12, Intel i7-4500U
+(the monitor was running but idle).
+
+| parser | frames/s (three runs) | relative |
+|---|---|---|
+| netguard parser | 249,860 / 234,013 / 249,729 | 1x |
+| Scapy `Ether(b)[IP].src` | 4,313 / 4,278 / 4,270 | 55-58x slower |
+| Scapy src/dst/port | 3,960 / 4,025 / 3,998 | 58-63x slower |
+
+The sandbox measured 397,129 vs 8,395 (47x, ADR 0011): the laptop is slower in absolute terms, the gap is
+wider. Parsing alone is about 4 microseconds a frame; the monitor's limit at high rates is elsewhere (the
+Phase 4B capacity sweep found loss starting above 32 MB/s on this laptop).
 
 ### Defects found by the Phase 7 work
 - The latency harness first reused a source address that still had an open event, so the scan merged into the

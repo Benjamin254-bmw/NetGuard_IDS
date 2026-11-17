@@ -1,0 +1,56 @@
+# NetGuard IDS monitor (Phase 8). Installed by deploy/install.sh; see docs/deployment.md.
+# Runs as a dedicated non-root user holding ONLY CAP_NET_RAW and CAP_NET_ADMIN (ADR 0005), the same
+# privilege set scripts/run-with-caps.sh gives it during development.
+[Unit]
+Description=NetGuard IDS network monitor
+Documentation=file:///opt/netguard/docs/deployment.md
+After=network-online.target postgresql.service
+Wants=network-online.target postgresql.service
+
+[Service]
+Type=exec
+User=netguard-monitor
+Group=netguard-monitor
+EnvironmentFile=/etc/netguard/monitor.env
+# Spill files (delivery during a database outage, ADR 0012) live here; systemd creates it, mode 0700.
+StateDirectory=netguard-monitor
+StateDirectoryMode=0700
+Environment=HOME=/var/lib/netguard-monitor
+WorkingDirectory=/var/lib/netguard-monitor
+ExecStart=/opt/netguard/venv/bin/python -m netguard_monitor.main run
+# SIGTERM makes the monitor drain its queues before exiting (Phase 3); give it time to do so.
+KillSignal=SIGTERM
+TimeoutStopSec=60
+Restart=on-failure
+RestartSec=5
+# Exit status 2 = the monitor refused to start (no interface or subnet, interface missing, ...): fix the
+# configuration instead of retrying every 5 s.
+RestartPreventExitStatus=2
+
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK AF_PACKET
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+UMask=0077
+# For the auth_failures rule the monitor must read the sshd log (ADR 0014). On Debian/Kali with rsyslog,
+# /var/log/auth.log is group 'adm': uncomment, and set NETGUARD_AUTH_LOG_PATH in /etc/netguard/monitor.env.
+#SupplementaryGroups=adm
+
+[Install]
+WantedBy=multi-user.target

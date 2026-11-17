@@ -62,8 +62,9 @@ export function LiveProvider({ children }: { children: ReactNode }) {
         feed: snapshot.feed,
         apiReachable: reachable,
         now,
+        lastCaptureAt: snapshot.capturedChangedAt,
       }),
-    [snapshot.monitor, snapshot.receivedAt, snapshot.feed, reachable, now],
+    [snapshot.monitor, snapshot.receivedAt, snapshot.capturedChangedAt, snapshot.feed, reachable, now],
   )
   const value = useMemo(() => ({ snapshot, status, now }), [snapshot, status, now])
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

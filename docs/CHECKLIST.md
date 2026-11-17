@@ -48,7 +48,7 @@ Legend: [x] done and verified (where stated) · [ ] open task that still blocks 
 - [x] Found on Kali: the writer failed on Python 3.13 (Thread subclass collided with Thread._handle); fixed by composition, regression-tested; the whole suite, capability-limited tests and both gates now pass on Python 3.12 AND 3.13
 - [x] (K) re-run on Kali after copying the fix: `make doctor`, `make setup`, `make migrate` (database is at 0003, so 0002 was applied), `make test`, `make test-integration`, `make test-capture` (19 passed): see the Phase 1-4 dispositions below
 - [x] (K) `make lab-up && make verify-capture` on Kali, 2026-11-11: ALL CHECKS PASSED (the gate on your hardware). *Optional, not run on Kali:* `make verify-capture-active`
-- *Deferred to Phase 7:* `lab/bench_parser.py` on the target laptop (parser benchmark; the 47x figure is a sandbox figure)
+- [x] (K) Parser benchmark on the Kali laptop (Phase 7, 2026-11-17, three runs): 234,013-249,860 vs Scapy 4,270-4,313 frames/s (55-58x) — ADR 0011
 - *Out of scope for Phase 3:* hostname resolution, IPv6, detection rules (Phase 4), high-rate performance and CPU/memory evaluation (Phase 7)
 
 ## Phase 4A: Detection rules and event pipeline
@@ -132,8 +132,26 @@ deferred parser benchmark, and an accessibility check. Design: ADR 0019. Write-u
 - [x] Defect found and fixed: top talkers over 30 days took 1,538 ms (median) at that size; rewritten (same results, tested against the original query, 3 mutants caught), now 223 ms
 - [x] Accessibility (`lab/a11y_audit.py`, axe-core, 36 views): 30 views failed at first (landmark, three contrast problems); fixed; now 0 violations. Chart-label contrast checked by computed colour (7.5:1 / 9.0:1)
 - [x] Unit tests for the harness helpers (`lab/tests/test_e2e_helpers.py`, `test_stack_helpers.py`); full suite with integration tests: 466 passed, 1 skipped; ruff, mypy clean; frontend 55 tests pass
-- [ ] (K) Run on Kali and record the figures: `make e2e-latency`, `make stack-resources`, the scale test (`make scale-db-up seed-scale stack-api-scale scale-db-down`), `make bench-parser` (commands in `docs/evaluation.md`)
+- [x] (K) `make bench-parser` on Kali 2026-11-17: 234,013-249,860 vs Scapy 4,270-4,313 frames/s (55-58x), `docs/evaluation.md` section 5
+- [x] (K) `make e2e-latency` on Kali 2026-11-17: 30/30, scan start to alert on the WebSocket median 0.561 s, p95 0.776 s, max 0.988 s (`docs/evaluation.md`)
+- [x] (K) `make stack-resources` on Kali 2026-11-17: idle about 183 MB total; at 8 MB/s the monitor uses 52% of a core, 0 drops; every dashboard endpoint under 20 ms (`docs/evaluation.md`)
+- [ ] (K) Run on Kali and record the figures: the scale test (`make scale-db-up seed-scale stack-api-scale scale-db-down`) (commands in `docs/evaluation.md`)
 - *Not measured (stated limits):* latency under heavy load; more than 5 simultaneous dashboard clients; runs of hours (growth, retention behaviour, stability); events and alerts tables at scale; detection under packet loss; behaviour on a real network
 - *Not checked by hand:* keyboard-only walkthrough, screen reader, 200%/400% zoom reflow, reduced motion, forced colours (automated axe checks do not cover these)
 
-Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, built; Kali runs pending) · Docs (8)
+
+## Phase 8: deployment and documentation (built 2026-11-17; Kali install pending)
+Design: ADR 0020. Guide: `docs/deployment.md`.
+- [x] systemd units: `netguard-monitor` (own user, only CAP_NET_RAW + CAP_NET_ADMIN, read-only filesystem, spill in `StateDirectory`, no retry on a configuration refusal) and `netguard-api` (own user, no capabilities); `systemd-analyze verify` clean apart from the not-yet-installed binary path
+- [x] Per-service secrets files, root 600, read by systemd (`deploy/render_env.py`): API file holds only the API role and a new session secret, monitor file only the monitor role; no migrator password in either — 6 tests, quoting checked against real systemd parsing (`systemd-run --user`)
+- [x] nginx site: dashboard and `/api` + WebSocket on one HTTPS origin, CSP without inline script or style, TLS 1.2+, `X-Forwarded-For` overwritten; checked with a non-root nginx on Kali (headers, caching, client-side routes, `/api` 404/401 from the API, TLS 1.1 refused)
+- [x] Self-signed certificate script (P-256, host name, `.local`, localhost, the machine's addresses; prints the fingerprint; never overwrites) — tested
+- [x] Finding: uvicorn already trusted `X-Forwarded-For` from 127.0.0.1 by default while the code said it was ignored. Now pinned in `app/__main__.py` (`forwarded_allow_ips="127.0.0.1,::1"`, an environment variable cannot widen it); 4 tests with the real uvicorn middleware (local proxy believed, remote peer cannot claim an address or https, foreign origin refused)
+- [x] Header "no packets" state: a live monitor whose packet count has not moved for 2 minutes is shown amber with a hint about the interface and promiscuous mode (the open question from Phase 6); the feed records when the counter last moved — 4 new unit tests; frontend 59 tests pass, lint back to the 7 earlier warnings
+- [x] `deploy/install.sh` (builds as the user, installs root-owned code, keeps `/etc/netguard`, refuses to start a second monitor), `deploy/verify.sh`, `deploy/uninstall.sh`; Makefile `deploy-install`, `deploy-verify`, `deploy-remove`
+- [x] `requirements.lock` generated (`make freeze`); the installer constrains versions with it
+- [x] Production-mode API (`NETGUARD_ENV=production`, empty allowed origins) behind the test nginx on Kali, against `netguard_test`: 12/12 checks — sign-in over https, session cookie `Secure; HttpOnly; SameSite=strict; Path=/api`, no API docs or schema, unsafe request without CSRF token 403, foreign origin 403, WebSocket `hello` over `wss://`, foreign-origin WebSocket refused, audit log recorded 127.0.0.1 for a request claiming 203.0.113.66, same-origin request with token 204. Mutation: with nginx appending instead of overwriting `X-Forwarded-For` the forged address reached the audit log and the check failed
+- [x] Full suite on Kali after Phase 8: `make lint` clean, `make typecheck` 58 files clean, `make test-integration` 466 passed (including the 10 new Phase 8 tests), 13 skipped (need CAP_NET_RAW); frontend tests, lint, build clean
+- [ ] (K) `make deploy-install && make deploy-verify` on Kali (needs sudo), then sign in at `https://<host>/` and see a live alert
+
+Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, built; parser benchmark recorded on Kali, other Kali runs pending) · Deployment and docs (8, built; Kali install pending)
