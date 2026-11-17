@@ -19,3 +19,7 @@ reads the sshd authentication log (`NETGUARD_AUTH_LOG_PATH`, e.g. `/var/log/auth
 
 Time of detection is the time the monitor *read* the line (poll interval 0.5 s), not the time sshd
 wrote it; latency figures for this rule include that delay.
+
+OpenSSH >= 9.8 throttles repeat offenders itself (`PerSourcePenalties`), which caps how many failures
+can ever reach the log. The IDS cannot detect failures that were never logged; the lab demo therefore
+verifies the log content as a precondition, separately from the detection result.

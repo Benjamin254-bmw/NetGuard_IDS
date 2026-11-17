@@ -55,6 +55,25 @@ class Settings(BaseSettings):
     auth_log_path: Path | None = None
     rules_reload_seconds: int = Field(10, ge=2, le=3600)
 
+    # API / sessions (Phase 5). The session secret has no default and must be >= 32 characters.
+    session_ttl_minutes: int = Field(30, ge=5, le=1440)
+    cookie_secure: bool | None = (
+        None  # None: Secure cookies in production only (dev uses plain http)
+    )
+    allowed_origins: str = (
+        "http://127.0.0.1:5173,http://localhost:5173"  # dashboard origins (WS + CORS)
+    )
+    api_host: str = "127.0.0.1"
+    api_port: int = Field(8000, ge=1, le=65535)
+
+    @property
+    def origins(self) -> list[str]:
+        return [o.strip().rstrip("/") for o in self.allowed_origins.split(",") if o.strip()]
+
+    @property
+    def cookies_secure(self) -> bool:
+        return self.env == "production" if self.cookie_secure is None else self.cookie_secure
+
     @field_validator("monitor_interface", "authorized_subnet", "auth_log_path", mode="before")
     @classmethod
     def _empty_is_unset(cls, v: object) -> object:
@@ -71,6 +90,8 @@ class Settings(BaseSettings):
         for name, value in secrets.items():
             if value is not None and value.get_secret_value() == PLACEHOLDER:
                 raise ValueError(f"{name} still has the placeholder value; run 'make init-env'")
+        if self.secret_key is not None and len(self.secret_key.get_secret_value()) < 32:
+            raise ValueError("secret_key must be at least 32 characters; run 'make init-env'")
         if self.env == "production" and self.secret_key is None:
             raise ValueError("secret_key is required when env=production")
         return self

@@ -1,0 +1,72 @@
+[
+ {
+  "id": 1,
+  "dedup_key": "auth_failures|10.10.10.100",
+  "category": "auth_failures",
+  "severity": "high",
+  "hit_count": 1,
+  "rule_version": 1,
+  "src": "10.10.10.100",
+  "is_open": true,
+  "created": 1794322631.995517,
+  "detected": 1794322631.914436,
+  "crossed_at": 1794322631.9144359,
+  "alerts": 1
+ },
+ {
+  "id": 2,
+  "dedup_key": "abnormal_traffic|10.10.10.101",
+  "category": "abnormal_traffic",
+  "severity": "medium",
+  "hit_count": 29,
+  "rule_version": 1,
+  "src": "10.10.10.101",
+  "is_open": false,
+  "created": 1794322637.909445,
+  "detected": 1794322637.907667,
+  "crossed_at": 1794322637.9076672,
+  "alerts": 1
+ },
+ {
+  "id": 3,
+  "dedup_key": "port_scan|10.10.10.103|10.10.10.10",
+  "category": "port_scan",
+  "severity": "high",
+  "hit_count": 80,
+  "rule_version": 1,
+  "src": "10.10.10.103",
+  "is_open": false,
+  "created": 1794322669.931175,
+  "detected": 1794322669.524179,
+  "crossed_at": 1794322669.5241792,
+  "alerts": 1
+ },
+ {
+  "id": 4,
+  "dedup_key": "excessive_connections|10.10.10.105|10.10.10.10|9002",
+  "category": "excessive_connections",
+  "severity": "high",
+  "hit_count": 1642,
+  "rule_version": 1,
+  "src": "10.10.10.105",
+  "is_open": false,
+  "created": 1794322706.183307,
+  "detected": 1794322705.817771,
+  "crossed_at": 1794322705.8177712,
+  "alerts": 2
+ },
+ {
+  "id": 5,
+  "dedup_key": "suspicious_dns|10.10.10.106|watchlist",
+  "category": "suspicious_dns",
+  "severity": "medium",
+  "hit_count": 3,
+  "rule_version": 2,
+  "src": "10.10.10.106",
+  "is_open": true,
+  "created": 1794322711.327121,
+  "detected": 1794322711.125082,
+  "crossed_at": 1794322711.1250823,
+  "alerts": 1
+ }
+]

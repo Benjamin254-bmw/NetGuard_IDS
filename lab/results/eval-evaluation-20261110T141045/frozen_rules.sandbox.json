@@ -1,0 +1,64 @@
+{
+  "frozen_at": "2026-11-10T14:10:45+00:00",
+  "plan_sha256": "fdf34579bc5ff06614bc7f86e976599e1208d371ea4769f32bfeee6622e24d95",
+  "tuning_run": "eval-tuning-20261110T135114",
+  "rules": [
+    {
+      "key": "abnormal_traffic",
+      "version": 1,
+      "enabled": true,
+      "severity": "medium",
+      "threshold": 5000000,
+      "window_seconds": 10,
+      "cooldown_seconds": 60,
+      "params": {}
+    },
+    {
+      "key": "auth_failures",
+      "version": 1,
+      "enabled": true,
+      "severity": "high",
+      "threshold": 5,
+      "window_seconds": 60,
+      "cooldown_seconds": 300,
+      "params": {}
+    },
+    {
+      "key": "excessive_connections",
+      "version": 1,
+      "enabled": true,
+      "severity": "medium",
+      "threshold": 100,
+      "window_seconds": 10,
+      "cooldown_seconds": 60,
+      "params": {}
+    },
+    {
+      "key": "port_scan",
+      "version": 1,
+      "enabled": true,
+      "severity": "high",
+      "threshold": 15,
+      "window_seconds": 10,
+      "cooldown_seconds": 60,
+      "params": {}
+    },
+    {
+      "key": "suspicious_dns",
+      "version": 2,
+      "enabled": true,
+      "severity": "low",
+      "threshold": 100,
+      "window_seconds": 60,
+      "cooldown_seconds": 300,
+      "params": {
+        "watchlist": [
+          "malware-eval.test"
+        ],
+        "distinct_names": 50,
+        "max_label_length": 52,
+        "watchlist_severity": "medium"
+      }
+    }
+  ]
+}

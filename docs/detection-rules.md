@@ -48,6 +48,13 @@ varying source addresses.
 - `abnormal_traffic` is an absolute limit set by the administrator, not a learned baseline.
 - `auth_failures` needs the sshd log (`NETGUARD_AUTH_LOG_PATH`); without it the rule is idle and the
   monitor says so. IPv4 sources only; the username is never stored.
+- `auth_failures` only sees failures sshd actually logs. OpenSSH >= 9.8 (Kali ships 10.x) has its own
+  brute-force throttle, `PerSourcePenalties`, on by default: after roughly four failed logins from one
+  source it refuses further connections, so the log may never reach the default threshold of 5. Found
+  on Kali: attempts 5 and 6 of the demo were refused (ssh exit 255) and no event was raised. The demo
+  now disables the throttle on the lab sshd only and checks that the log holds enough failures before
+  judging the IDS. Whether the production threshold should be lower (or counted per connection) is a
+  Phase 4B tuning question.
 - Windows use the host wall clock (`ts_utc`); a large clock step during a window can distort it.
 - Capacity: a 1.3 Gbit/s burst (115,000 packets/s of 1,400-byte frames) in the 2-vCPU sandbox
   overran the 16 MB kernel buffer and was reported as `kernel_drops` (3,135 of ~17,800 packets);

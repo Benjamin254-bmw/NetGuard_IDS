@@ -1,0 +1,46 @@
+.app { min-height: 100vh; display: grid; grid-template-columns: var(--rail) 1fr; grid-template-rows: var(--header) auto 1fr; grid-template-areas: 'top top' 'rail banner' 'rail main'; }
+.brand { flex: none; width: var(--rail); align-self: stretch; display: flex; align-items: center; padding: 0 1.25rem; font-weight: 700; font-size: var(--step-1); letter-spacing: -0.02em; border-right: 1px solid var(--line); }
+.brand span { color: var(--sea); }
+.topbar { grid-area: top; display: flex; align-items: center; gap: 1.5rem; padding: 0 1.5rem 0 0; background: var(--surface); border-bottom: 1px solid var(--line); min-width: 0; }
+.rail { grid-area: rail; padding: 1rem 0.75rem; border-right: 1px solid var(--line); background: var(--surface); }
+.rail nav { display: flex; flex-direction: column; gap: 2px; position: sticky; top: 1rem; }
+.rail a { display: block; padding: 0.55rem 0.75rem; border-radius: var(--radius); text-decoration: none; color: var(--ink-soft); font-weight: 500; }
+.rail a:hover { background: var(--sunken); color: var(--ink); }
+.rail a[aria-current='page'] { background: var(--sea-wash); color: var(--ink); font-weight: 620; box-shadow: inset 3px 0 0 var(--sea); }
+.main { grid-area: main; padding: 1.75rem 1.75rem 3rem; min-width: 0; max-width: 92rem; }
+.banner { grid-area: banner; margin: 0; padding: 0.55rem 1.75rem; display: flex; gap: 0.75rem; align-items: baseline; font-size: var(--step--1); background: repeating-linear-gradient(135deg, var(--sunken) 0 10px, transparent 10px 20px), var(--surface); border-bottom: 1px solid var(--line); }
+.banner strong { font-weight: 650; }
+
+/* Header status: the pulse is the one expressive element on the page. */
+.status { display: flex; align-items: center; gap: 0.9rem; min-width: 0; }
+.status svg { flex: none; width: 7.5rem; height: 2.2rem; overflow: visible; }
+.status .trace { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.status-text { min-width: 0; }
+.status-title { font-weight: 650; line-height: 1.2; }
+.status-detail { font-size: var(--step--1); color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status[data-level='live'] { color: var(--sea); }
+.status[data-level='degraded'] { color: var(--warn); }
+.status[data-level='starting'], .status[data-level='connecting'] { color: var(--ink-soft); }
+.status[data-level='silent'], .status[data-level='disconnected'], .status[data-level='unreachable'] { color: var(--danger); }
+.status[data-level='never'] { color: var(--ink-faint); }
+.status .live-trace { stroke-dasharray: 160; animation: sweep 2.6s linear infinite; }
+.status[data-level='degraded'] .live-trace { animation-duration: 1.4s; }
+.status .flat { stroke-dasharray: 3 6; opacity: 0.8; }
+@keyframes sweep { from { stroke-dashoffset: 160; } to { stroke-dashoffset: -160; } }
+
+.user-menu { margin-left: auto; display: flex; align-items: center; gap: 0.9rem; font-size: var(--step--1); white-space: nowrap; }
+.user-menu .who { text-align: right; line-height: 1.25; }
+
+@media (max-width: 52rem) {
+  .app { grid-template-columns: 1fr; grid-template-rows: auto auto auto 1fr; grid-template-areas: 'top' 'rail' 'banner' 'main'; }
+  .brand { flex: 1 0 100%; width: auto; padding: 0.6rem 0; border-right: 0; }
+  .topbar { padding: 0 1rem 0.6rem; flex-wrap: wrap; gap: 0.6rem 1rem; }
+  .status svg { width: 4.5rem; }
+  .status-detail { white-space: normal; }
+  .rail { border-right: 0; border-bottom: 1px solid var(--line); padding: 0.4rem 0.5rem; overflow-x: auto; }
+  .rail nav { flex-direction: row; position: static; }
+  .rail a { white-space: nowrap; }
+  .rail a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--sea); }
+  .main { padding: 1.25rem 1rem 2.5rem; }
+  .banner { padding: 0.5rem 1rem; }
+}

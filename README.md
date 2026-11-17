@@ -4,16 +4,16 @@ Lightweight network monitoring and rule-based intrusion detection for small netw
 (fourth-year Computer Technology project). Defensive tool: monitor only networks you own or are
 explicitly authorised to monitor.
 
-**Status: Phase 4A (detection rules, event/alert pipeline) built; demonstrated on real lab traffic. The evaluation harness (Phase 4B, recall/precision/false-positive rate) and Gate A are NOT done. No API endpoints or dashboard exist yet.**
+**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurement tools (end-to-end latency, whole-stack cost, API at scale, accessibility audit) are built and run in the sandbox; the Kali runs are still to be recorded (`docs/evaluation.md`).**
 See `docs/CHECKLIST.md` for exactly what is and is not done.
 
 ## Layout
 | Path | Purpose |
 |---|---|
 | `shared/netguard_common` | Settings, logging, DB engine/diagnostics shared by API and monitor |
-| `backend/app` | FastAPI API (health endpoints only so far) |
+| `backend/app` | FastAPI API: auth, users, monitoring data, rules, WebSocket (`docs/api.md`) |
 | `monitor/netguard_monitor` | Monitoring service (environment self-check only so far) |
-| `frontend` | Vite + React + TypeScript scaffold (no pages until after Gate A) |
+| `frontend` | React + TypeScript dashboard (`docs/dashboard.md`) |
 | `lab/` | Isolated test lab (`setup_lab.sh`) and, later, the evaluation harness |
 | `scripts/` | `init_env.sh`, `db_init.sh`, `run-with-caps.sh` |
 | `docs/adr` | Architecture decision records |
@@ -44,8 +44,9 @@ Requires PostgreSQL >= 15 running locally (developed against 18) and internet ac
 ## Monitor (Phase 3)
 Operations guide: `docs/monitor.md`. Design decisions: ADRs 0011 (capture) and 0012 (delivery guarantees).
 ```bash
-make lab-up                  # isolated lab; then set NETGUARD_MONITOR_INTERFACE=br-lab and
-                             # NETGUARD_AUTHORIZED_SUBNET=10.10.10.0/24 in .env
+make lab-up                  # isolated lab; then set NETGUARD_MONITOR_INTERFACE=br-lab,
+                             # NETGUARD_AUTHORIZED_SUBNET=10.10.10.0/24 and NETGUARD_PROMISCUOUS=true in .env
+                             # (the bridge only delivers lab-to-lab traffic to a promiscuous listener)
 make monitor-check           # what would be refused, and why (needs sudo; runs as you, not root)
 make monitor-run             # start monitoring; Ctrl-C drains everything before stopping
 make test-capture            # capture + service tests under CAP_NET_RAW/NET_ADMIN only
@@ -54,6 +55,9 @@ make verify-capture-active   # same, with active ARP discovery
 ```
 The monitor refuses to start unless the interface and authorised subnet are set explicitly.
 Do not monitor `lo` outside tests (it would capture its own database connection).
+
+## Evaluation (Phase 4B)
+`make eval-plan`, `eval-reset`, `eval-smoke`, `eval-tuning`, then `lab/evaluate.py freeze --tuning-run DIR`, `eval-evaluation`, `eval-capacity`. Method and results: `docs/evaluation.md`, ADR 0015.
 
 ## Detection (Phase 4A)
 Rule specifications and known limits: `docs/detection-rules.md`. Decisions: ADRs 0013 (event lifecycle),

@@ -15,3 +15,6 @@ lab/results/*.pcap
 *.pcap
 *.jsonl
 var/
+# evaluation evidence: the hash-checked trial plan and each run's per-trial log (ADR 0015)
+!lab/eval/*.jsonl
+!lab/results/*/trials.jsonl

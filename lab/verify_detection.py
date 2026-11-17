@@ -43,6 +43,7 @@ from verify_capture import (  # noqa: E402
     ROOT,
     SUBNET,
     VICTIM,
+    lab_extra_addresses,
     load_env,
     pcap_count,
     sh,
@@ -51,8 +52,12 @@ from verify_capture import (  # noqa: E402
 
 from netguard_common.config import load_settings  # noqa: E402
 from netguard_common.db import make_engine  # noqa: E402
+from netguard_monitor.ids.logsource import parse_auth_line  # noqa: E402
 
 LATENCY_LIMIT = 3.0
+# sshpass gives up after one wrong answer, so each attempt is about one failed login; the
+# auth_failures threshold is 5. NETGUARD_LAB_SSH_ATTEMPTS lets a test lower it (negative control).
+SSH_ATTEMPTS = int(os.environ.get("NETGUARD_LAB_SSH_ATTEMPTS", "6"))
 SCAN_PORTS = "1-1000"
 EXPECTED_KEYS = {
     f"port_scan|{ATTACKER}|{VICTIM}",
@@ -130,6 +135,9 @@ STANDIN_LINE = (
 )
 
 
+SSHD_NOTES: dict[str, Any] = {}
+
+
 class Scenario:
     """Runs and records every attack/benign command: exit status, duration and output tail."""
 
@@ -167,11 +175,24 @@ def start_sshd(work: Path, auth_log: Path) -> subprocess.Popen[bytes] | str:
     key = work / "host_ed25519"
     sh("ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-f", str(key))
     conf = work / "sshd_config"
-    conf.write_text(
+    base = (
         f"HostKey {key}\nListenAddress {VICTIM}\nPort 22\nUsePAM no\nPasswordAuthentication yes\n"
         "PubkeyAuthentication no\nPermitRootLogin yes\nMaxAuthTries 6\nLoginGraceTime 20\n"
         f"PidFile {work / 'sshd.pid'}\nLogLevel INFO\n"
     )
+    # OpenSSH >= 9.8 refuses a source after a few failed logins (PerSourcePenalties, on by default).
+    # That is a good production default, but in this demo it would stop the attacker's later attempts
+    # before sshd logs them, leaving the IDS fewer failures than its threshold. Switch it off for the
+    # lab sshd only, if this OpenSSH knows the option (older versions do not and need no change).
+    conf.write_text(base + "PerSourcePenalties no\n")
+    if (
+        subprocess.run([sshd, "-t", "-f", str(conf)], capture_output=True, check=False).returncode
+        == 0
+    ):  # noqa: S603
+        SSHD_NOTES["penalties_disabled"] = True
+    else:
+        conf.write_text(base)
+        SSHD_NOTES["penalties_disabled"] = False
     proc = subprocess.Popen(  # noqa: S603
         [
             "ip",
@@ -209,6 +230,14 @@ def main() -> int:
     if sh("ip", "link", "show", BR).returncode != 0:
         print("lab is not up: run 'make lab-up' first", file=sys.stderr)
         return 2
+    extra = lab_extra_addresses()
+    if extra:
+        print(
+            f"the lab has {len(extra)} extra addresses (left by an evaluation run?), e.g. {extra[:3]}.\n"
+            "run 'make lab-down && make lab-up' for a clean lab",
+            file=sys.stderr,
+        )
+        return 2
     for tool in ("nmap", "tcpdump"):
         if not shutil.which(tool):
             print(f"required tool missing: {tool}", file=sys.stderr)
@@ -245,6 +274,10 @@ def main() -> int:
         "NETGUARD_AUTH_LOG_PATH": str(auth_log),
         "NETGUARD_RULES_RELOAD_SECONDS": "2",
         "NETGUARD_ACTIVE_DISCOVERY": "false",
+        # Lab frames cross a bridge and are not addressed to it: the monitor itself must hold the
+        # interface promiscuous. (Earlier versions of this script passed only because the tcpdump
+        # oracle switched promiscuous mode on as a side effect.)
+        "NETGUARD_PROMISCUOUS": os.environ.get("NETGUARD_LAB_PROMISCUOUS", "true"),
     }
     cmd = [PY, "-m", "netguard_monitor.main", "run", "--duration", "300"]
     if least_privilege:
@@ -372,9 +405,7 @@ def main() -> int:
                 )
                 print("  [stand-in] 6 failed-login lines appended (NOT real SSH traffic)")
             else:
-                for i in range(
-                    6
-                ):  # sshpass gives up after one wrong answer: one failure per attempt
+                for i in range(SSH_ATTEMPTS):
                     sc.run(
                         f"ssh login attempt {i + 1} with wrong password",
                         "ng-attacker",
@@ -440,6 +471,28 @@ def main() -> int:
         versions = {r[0]: r[1] for r in c.execute(text("SELECT key, version FROM detection_rules"))}
         notified_alerts = int(c.execute(text("SELECT count(*) FROM alerts")).scalar_one())
     by_key = {e["dedup_key"]: e for e in events}
+    failed_lines = [
+        ln
+        for ln in auth_log.read_text(errors="replace").splitlines()
+        if parse_auth_line(ln, 0.0) is not None
+    ]
+    with mig.connect() as c:
+        auth_threshold = int(
+            c.execute(
+                text("SELECT threshold FROM detection_rules WHERE key = 'auth_failures'")
+            ).scalar_one()
+        )
+    checks.append(
+        {
+            "check": "precondition: the sshd log holds at least `threshold` failed logins to detect",
+            "failed_logins_in_log": len(failed_lines),
+            "threshold": auth_threshold,
+            "sshd_penalties_disabled": SSHD_NOTES.get("penalties_disabled"),
+            "hint": "if this fails, sshd throttled the attacker before logging (OpenSSH >= 9.8 "
+            "PerSourcePenalties) - the IDS cannot detect failures that were never logged",
+            "pass": len(failed_lines) >= auth_threshold,
+        }
+    )
     got = set(by_key)
     checks.append(
         {
@@ -594,6 +647,8 @@ def main() -> int:
                 "alerts_total": notified_alerts,
                 "problems": problems,
                 "monitor_log_tail": monitor_log.read_text().splitlines()[-25:],
+                "sshd_log_tail": auth_log.read_text(errors="replace").splitlines()[-12:],
+                "sshd_notes": SSHD_NOTES,
             },
             indent=2,
             default=str,

@@ -46,7 +46,10 @@ Capability-limited tests: `make test-capture`. Parser benchmark: `.venv/bin/pyth
 
 ## Limitations
 IPv4 and ARP only; timestamps are user-space read times; a host sensor sees only what its interface
-sees (use a bridge, gateway, or mirror port; set NETGUARD_PROMISCUOUS=true for mirror ports);
+sees (use a bridge, gateway, or mirror port). **NETGUARD_PROMISCUOUS=true is required whenever the
+monitored interface carries frames not addressed to the host itself**: mirror/SPAN ports and a
+bridge device that forwards traffic between other ports (as in the lab). With it off the monitor
+silently captures almost nothing (5 packets versus 165,782 in the same Phase 4B run);
 kernel drops before the socket are invisible; ICMP error rate limiting by the sender is not ours
 to count. TCP "new connections" means SYN without ACK.
 

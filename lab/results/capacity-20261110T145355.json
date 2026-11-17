@@ -1,0 +1,281 @@
+{
+ "when": "2026-11-10T14:53:55+00:00",
+ "seconds_per_step": 15,
+ "monitor_privileges": "non-root, CAP_NET_RAW+CAP_NET_ADMIN only",
+ "cpus": 2,
+ "criterion": "kernel drops == 0 and captured >= 99.9% of sent",
+ "steps": [
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 1.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 10402,
+    "seconds": 15.0,
+    "achieved_mbps": 1.0
+   },
+   "sent_packets": 10402,
+   "captured_delta": 10404,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00019,
+   "cpu_percent_median": 2.0,
+   "cpu_percent_max": 2.0,
+   "rss_mb_max": 66.1,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 2.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 20804,
+    "seconds": 15.0,
+    "achieved_mbps": 2.0
+   },
+   "sent_packets": 20804,
+   "captured_delta": 20806,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.0001,
+   "cpu_percent_median": 3.0,
+   "cpu_percent_max": 4.0,
+   "rss_mb_max": 66.1,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 4.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 41608,
+    "seconds": 15.0,
+    "achieved_mbps": 4.0
+   },
+   "sent_packets": 41608,
+   "captured_delta": 41610,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00005,
+   "cpu_percent_median": 5.0,
+   "cpu_percent_max": 9.0,
+   "rss_mb_max": 66.1,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 8.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 83217,
+    "seconds": 15.0,
+    "achieved_mbps": 8.0
+   },
+   "sent_packets": 83217,
+   "captured_delta": 83219,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00002,
+   "cpu_percent_median": 12.0,
+   "cpu_percent_max": 16.0,
+   "rss_mb_max": 66.2,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 16.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 166435,
+    "seconds": 15.0,
+    "achieved_mbps": 16.0
+   },
+   "sent_packets": 166435,
+   "captured_delta": 166437,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00001,
+   "cpu_percent_median": 26.0,
+   "cpu_percent_max": 34.0,
+   "rss_mb_max": 66.2,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 32.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 332871,
+    "seconds": 15.0,
+    "achieved_mbps": 32.01
+   },
+   "sent_packets": 332871,
+   "captured_delta": 332873,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00001,
+   "cpu_percent_median": 43.0,
+   "cpu_percent_max": 48.0,
+   "rss_mb_max": 66.2,
+   "sustained": true
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 64.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 665742,
+    "seconds": 15.0,
+    "achieved_mbps": 64.0
+   },
+   "sent_packets": 665742,
+   "captured_delta": 585708,
+   "kernel_dropped_delta": 80036,
+   "capture_ratio": 0.87978,
+   "cpu_percent_median": 88.9,
+   "cpu_percent_max": 93.0,
+   "rss_mb_max": 67.3,
+   "sustained": false
+  },
+  {
+   "scenario": "udp_rate",
+   "requested": {
+    "mbps": 128.0,
+    "seconds": 15.0
+   },
+   "rc": 0,
+   "driver": {
+    "packets": 1331484,
+    "seconds": 15.0,
+    "achieved_mbps": 128.01
+   },
+   "sent_packets": 1331484,
+   "captured_delta": 777335,
+   "kernel_dropped_delta": 554151,
+   "capture_ratio": 0.58381,
+   "cpu_percent_median": 87.0,
+   "cpu_percent_max": 92.9,
+   "rss_mb_max": 67.3,
+   "sustained": false
+  },
+  {
+   "scenario": "flood",
+   "requested": {
+    "ports": [
+     9002
+    ],
+    "n": 1000,
+    "seconds": 10.0
+   },
+   "rc": 0,
+   "driver": {
+    "attempts": 1000,
+    "open": 0,
+    "refused": 1000,
+    "error": 0,
+    "seconds": 10.0
+   },
+   "sent_packets": 2000,
+   "captured_delta": 2002,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.001,
+   "cpu_percent_median": 3.0,
+   "cpu_percent_max": 4.0,
+   "rss_mb_max": 67.4,
+   "sustained": true
+  },
+  {
+   "scenario": "flood",
+   "requested": {
+    "ports": [
+     9002
+    ],
+    "n": 3000,
+    "seconds": 10.0
+   },
+   "rc": 0,
+   "driver": {
+    "attempts": 3000,
+    "open": 0,
+    "refused": 3000,
+    "error": 0,
+    "seconds": 10.0
+   },
+   "sent_packets": 6000,
+   "captured_delta": 6004,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00067,
+   "cpu_percent_median": 7.0,
+   "cpu_percent_max": 9.0,
+   "rss_mb_max": 68.5,
+   "sustained": true
+  },
+  {
+   "scenario": "flood",
+   "requested": {
+    "ports": [
+     9002
+    ],
+    "n": 10000,
+    "seconds": 10.0
+   },
+   "rc": 0,
+   "driver": {
+    "attempts": 10000,
+    "open": 0,
+    "refused": 10000,
+    "error": 0,
+    "seconds": 10.0
+   },
+   "sent_packets": 20000,
+   "captured_delta": 20002,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.0001,
+   "cpu_percent_median": 19.0,
+   "cpu_percent_max": 21.0,
+   "rss_mb_max": 72.5,
+   "sustained": true
+  },
+  {
+   "scenario": "flood",
+   "requested": {
+    "ports": [
+     9002
+    ],
+    "n": 30000,
+    "seconds": 10.0
+   },
+   "rc": 0,
+   "driver": {
+    "attempts": 30000,
+    "open": 0,
+    "refused": 30000,
+    "error": 0,
+    "seconds": 10.0
+   },
+   "sent_packets": 60000,
+   "captured_delta": 60004,
+   "kernel_dropped_delta": 0,
+   "capture_ratio": 1.00007,
+   "cpu_percent_median": 43.0,
+   "cpu_percent_max": 49.0,
+   "rss_mb_max": 73.3,
+   "sustained": true
+  }
+ ]
+}

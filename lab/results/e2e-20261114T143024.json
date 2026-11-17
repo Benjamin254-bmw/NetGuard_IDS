@@ -1,0 +1,356 @@
+{
+  "when": "2026-11-14T14:30:24.669642+00:00",
+  "host": "kali",
+  "kernel": "6.19.14+kali-amd64",
+  "python": "3.13.12",
+  "scan": "nmap -sS -T4 --max-retries 1, ports 1-40 (40 ports), fresh source per trial",
+  "wait_s": 15.0,
+  "monitor": {
+    "interface": "br-lab",
+    "version": "0.1.0",
+    "packets_dropped": 0,
+    "degraded_reasons": []
+  },
+  "summary": {
+    "trials": 30,
+    "detected": 30,
+    "missed": 0,
+    "scan_process_s": {
+      "n": 30,
+      "min": 0.163,
+      "median": 0.187,
+      "p95": 0.243,
+      "max": 0.319
+    },
+    "total_s": {
+      "n": 30,
+      "min": 0.36,
+      "median": 0.575,
+      "p95": 0.784,
+      "max": 0.808
+    },
+    "to_alert_row_s": {
+      "n": 30,
+      "min": 0.322,
+      "median": 0.549,
+      "p95": 0.743,
+      "max": 0.752
+    },
+    "delivery_s": {
+      "n": 30,
+      "min": 0.014,
+      "median": 0.021,
+      "p95": 0.239,
+      "max": 0.261
+    },
+    "negative_delivery": 0
+  },
+  "invalid": [],
+  "trials": [
+    {
+      "ip": "10.10.10.101",
+      "detected": true,
+      "alert_id": 71,
+      "severity": "high",
+      "total": 0.7573657035827637,
+      "to_alert_row": 0.7348177433013916,
+      "delivery": 0.02254796028137207,
+      "scan_process": 0.1833643913269043
+    },
+    {
+      "ip": "10.10.10.102",
+      "detected": true,
+      "alert_id": 72,
+      "severity": "high",
+      "total": 0.553964376449585,
+      "to_alert_row": 0.529252290725708,
+      "delivery": 0.024712085723876953,
+      "scan_process": 0.17336702346801758
+    },
+    {
+      "ip": "10.10.10.103",
+      "detected": true,
+      "alert_id": 73,
+      "severity": "high",
+      "total": 0.7632162570953369,
+      "to_alert_row": 0.7388763427734375,
+      "delivery": 0.024339914321899414,
+      "scan_process": 0.1805887222290039
+    },
+    {
+      "ip": "10.10.10.104",
+      "detected": true,
+      "alert_id": 74,
+      "severity": "high",
+      "total": 0.557072639465332,
+      "to_alert_row": 0.5338397026062012,
+      "delivery": 0.02323293685913086,
+      "scan_process": 0.16798830032348633
+    },
+    {
+      "ip": "10.10.10.105",
+      "detected": true,
+      "alert_id": 75,
+      "severity": "high",
+      "total": 0.7877721786499023,
+      "to_alert_row": 0.5516877174377441,
+      "delivery": 0.2360844612121582,
+      "scan_process": 0.20860052108764648
+    },
+    {
+      "ip": "10.10.10.106",
+      "detected": true,
+      "alert_id": 76,
+      "severity": "high",
+      "total": 0.36002302169799805,
+      "to_alert_row": 0.3427724838256836,
+      "delivery": 0.017250537872314453,
+      "scan_process": 0.18990850448608398
+    },
+    {
+      "ip": "10.10.10.107",
+      "detected": true,
+      "alert_id": 77,
+      "severity": "high",
+      "total": 0.538367748260498,
+      "to_alert_row": 0.5220298767089844,
+      "delivery": 0.016337871551513672,
+      "scan_process": 0.17070794105529785
+    },
+    {
+      "ip": "10.10.10.108",
+      "detected": true,
+      "alert_id": 78,
+      "severity": "high",
+      "total": 0.5616261959075928,
+      "to_alert_row": 0.5424602031707764,
+      "delivery": 0.019165992736816406,
+      "scan_process": 0.18525242805480957
+    },
+    {
+      "ip": "10.10.10.109",
+      "detected": true,
+      "alert_id": 79,
+      "severity": "high",
+      "total": 0.5630152225494385,
+      "to_alert_row": 0.5479593276977539,
+      "delivery": 0.01505589485168457,
+      "scan_process": 0.22887110710144043
+    },
+    {
+      "ip": "10.10.10.110",
+      "detected": true,
+      "alert_id": 80,
+      "severity": "high",
+      "total": 0.757272481918335,
+      "to_alert_row": 0.7366015911102295,
+      "delivery": 0.02067089080810547,
+      "scan_process": 0.17638921737670898
+    },
+    {
+      "ip": "10.10.10.111",
+      "detected": true,
+      "alert_id": 81,
+      "severity": "high",
+      "total": 0.6727137565612793,
+      "to_alert_row": 0.6523172855377197,
+      "delivery": 0.02039647102355957,
+      "scan_process": 0.31903767585754395
+    },
+    {
+      "ip": "10.10.10.112",
+      "detected": true,
+      "alert_id": 82,
+      "severity": "high",
+      "total": 0.5638995170593262,
+      "to_alert_row": 0.5473287105560303,
+      "delivery": 0.0165708065032959,
+      "scan_process": 0.1977081298828125
+    },
+    {
+      "ip": "10.10.10.113",
+      "detected": true,
+      "alert_id": 83,
+      "severity": "high",
+      "total": 0.7363283634185791,
+      "to_alert_row": 0.717033863067627,
+      "delivery": 0.01929450035095215,
+      "scan_process": 0.1649315357208252
+    },
+    {
+      "ip": "10.10.10.114",
+      "detected": true,
+      "alert_id": 84,
+      "severity": "high",
+      "total": 0.7659504413604736,
+      "to_alert_row": 0.7457268238067627,
+      "delivery": 0.020223617553710938,
+      "scan_process": 0.21636390686035156
+    },
+    {
+      "ip": "10.10.10.115",
+      "detected": true,
+      "alert_id": 85,
+      "severity": "high",
+      "total": 0.7666904926300049,
+      "to_alert_row": 0.7524137496948242,
+      "delivery": 0.014276742935180664,
+      "scan_process": 0.16508150100708008
+    },
+    {
+      "ip": "10.10.10.116",
+      "detected": true,
+      "alert_id": 86,
+      "severity": "high",
+      "total": 0.5697879791259766,
+      "to_alert_row": 0.5504658222198486,
+      "delivery": 0.01932215690612793,
+      "scan_process": 0.1907024383544922
+    },
+    {
+      "ip": "10.10.10.117",
+      "detected": true,
+      "alert_id": 87,
+      "severity": "high",
+      "total": 0.5729620456695557,
+      "to_alert_row": 0.5501899719238281,
+      "delivery": 0.02277207374572754,
+      "scan_process": 0.19786953926086426
+    },
+    {
+      "ip": "10.10.10.118",
+      "detected": true,
+      "alert_id": 88,
+      "severity": "high",
+      "total": 0.5422167778015137,
+      "to_alert_row": 0.5259692668914795,
+      "delivery": 0.01624751091003418,
+      "scan_process": 0.18027067184448242
+    },
+    {
+      "ip": "10.10.10.119",
+      "detected": true,
+      "alert_id": 89,
+      "severity": "high",
+      "total": 0.5470850467681885,
+      "to_alert_row": 0.5311517715454102,
+      "delivery": 0.01593327522277832,
+      "scan_process": 0.17595553398132324
+    },
+    {
+      "ip": "10.10.10.120",
+      "detected": true,
+      "alert_id": 90,
+      "severity": "high",
+      "total": 0.5584530830383301,
+      "to_alert_row": 0.5426788330078125,
+      "delivery": 0.015774250030517578,
+      "scan_process": 0.20741939544677734
+    },
+    {
+      "ip": "10.10.10.121",
+      "detected": true,
+      "alert_id": 91,
+      "severity": "high",
+      "total": 0.5765626430511475,
+      "to_alert_row": 0.5565509796142578,
+      "delivery": 0.02001166343688965,
+      "scan_process": 0.20789551734924316
+    },
+    {
+      "ip": "10.10.10.122",
+      "detected": true,
+      "alert_id": 92,
+      "severity": "high",
+      "total": 0.7798347473144531,
+      "to_alert_row": 0.5425205230712891,
+      "delivery": 0.23731422424316406,
+      "scan_process": 0.1945359706878662
+    },
+    {
+      "ip": "10.10.10.123",
+      "detected": true,
+      "alert_id": 93,
+      "severity": "high",
+      "total": 0.5629446506500244,
+      "to_alert_row": 0.321796178817749,
+      "delivery": 0.2411484718322754,
+      "scan_process": 0.16602301597595215
+    },
+    {
+      "ip": "10.10.10.124",
+      "detected": true,
+      "alert_id": 94,
+      "severity": "high",
+      "total": 0.37165188789367676,
+      "to_alert_row": 0.3464057445526123,
+      "delivery": 0.025246143341064453,
+      "scan_process": 0.20260381698608398
+    },
+    {
+      "ip": "10.10.10.125",
+      "detected": true,
+      "alert_id": 95,
+      "severity": "high",
+      "total": 0.5538358688354492,
+      "to_alert_row": 0.5365447998046875,
+      "delivery": 0.01729106903076172,
+      "scan_process": 0.18402910232543945
+    },
+    {
+      "ip": "10.10.10.126",
+      "detected": true,
+      "alert_id": 96,
+      "severity": "high",
+      "total": 0.743262767791748,
+      "to_alert_row": 0.7185118198394775,
+      "delivery": 0.024750947952270508,
+      "scan_process": 0.16510868072509766
+    },
+    {
+      "ip": "10.10.10.127",
+      "detected": true,
+      "alert_id": 97,
+      "severity": "high",
+      "total": 0.6220731735229492,
+      "to_alert_row": 0.5981254577636719,
+      "delivery": 0.023947715759277344,
+      "scan_process": 0.25507259368896484
+    },
+    {
+      "ip": "10.10.10.128",
+      "detected": true,
+      "alert_id": 98,
+      "severity": "high",
+      "total": 0.8079054355621338,
+      "to_alert_row": 0.547177791595459,
+      "delivery": 0.2607276439666748,
+      "scan_process": 0.18885540962219238
+    },
+    {
+      "ip": "10.10.10.129",
+      "detected": true,
+      "alert_id": 99,
+      "severity": "high",
+      "total": 0.591853141784668,
+      "to_alert_row": 0.5570452213287354,
+      "delivery": 0.03480792045593262,
+      "scan_process": 0.22123932838439941
+    },
+    {
+      "ip": "10.10.10.130",
+      "detected": true,
+      "alert_id": 100,
+      "severity": "high",
+      "total": 0.7343027591705322,
+      "to_alert_row": 0.7092750072479248,
+      "delivery": 0.025027751922607422,
+      "scan_process": 0.1634681224822998
+    }
+  ],
+  "notes": [
+    "t_launch is taken just before the nmap process is spawned; total includes nmap start-up and the scan itself",
+    "created_at is the database now(), the start of the committing transaction: delivery includes the commit",
+    "single lab, single victim, one machine's clock; not a statement about other networks"
+  ]
+}

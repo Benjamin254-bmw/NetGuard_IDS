@@ -103,6 +103,25 @@ def load_env(path: Path) -> dict[str, str]:
     return env
 
 
+def lab_extra_addresses() -> list[str]:
+    """Addresses on the lab interfaces beyond the one each namespace is meant to have.
+
+    The evaluation harness adds one source address per trial; if they are left behind, nmap -sn and
+    the monitor's MAC-keyed device table disagree and the discovery check fails for a reason that has
+    nothing to do with the monitor. The verification scripts therefore refuse to run on such a lab.
+    """
+    extra: list[str] = []
+    for ns, dev, want in (
+        ("ng-victim", "pvictim", VICTIM),
+        ("ng-normal", "pnormal", NORMAL),
+        ("ng-attacker", "pattacker", ATTACKER),
+    ):
+        out = sh("ip", "-n", ns, "-4", "-o", "addr", "show", "dev", dev).stdout
+        addrs = [ln.split()[3].split("/")[0] for ln in out.splitlines() if "inet " in ln]
+        extra += [f"{ns}:{a}" for a in addrs if a != want]
+    return extra
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--active", action="store_true", help="also enable active ARP discovery")
@@ -112,6 +131,14 @@ def main() -> int:
         return 2
     if sh("ip", "link", "show", BR).returncode != 0:
         print("lab is not up: run 'make lab-up' first", file=sys.stderr)
+        return 2
+    extra = lab_extra_addresses()
+    if extra:
+        print(
+            f"the lab has {len(extra)} extra addresses (left by an evaluation run?), e.g. {extra[:3]}.\n"
+            "run 'make lab-down && make lab-up' for a clean lab",
+            file=sys.stderr,
+        )
         return 2
 
     base = load_settings(ROOT / ".env")
@@ -136,6 +163,10 @@ def main() -> int:
         "NETGUARD_AUTHORIZED_SUBNET": SUBNET,
         "NETGUARD_SPILL_DIR": str(work / "spill"),
         "NETGUARD_ACTIVE_DISCOVERY": "true" if args.active else "false",
+        # Lab frames cross a bridge and are not addressed to it: the monitor itself must hold the
+        # interface promiscuous. (Earlier versions of this script passed only because the tcpdump
+        # oracle switched promiscuous mode on as a side effect.)
+        "NETGUARD_PROMISCUOUS": os.environ.get("NETGUARD_LAB_PROMISCUOUS", "true"),
     }
     cmd = [PY, "-m", "netguard_monitor.main", "run", "--duration", "120"]
     least_privilege = bool(uid and uid != "0")

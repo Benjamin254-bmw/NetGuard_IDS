@@ -1,0 +1,5867 @@
+{
+ "meta": {
+  "split": "evaluation",
+  "smoke": false,
+  "started": "2026-11-10T14:10:48+00:00",
+  "duration_s": 2231,
+  "plan_sha256": "fdf34579bc5ff06614bc7f86e976599e1208d371ea4769f32bfeee6622e24d95",
+  "rules_frozen": true,
+  "monitor_privileges": "non-root, CAP_NET_RAW+CAP_NET_ADMIN only",
+  "aborted": null,
+  "kernel": "6.18.44-fc-v338",
+  "nmap": "Nmap version 7.94SVN ( https://nmap.org )"
+ },
+ "rules": [
+  {
+   "key": "abnormal_traffic",
+   "version": 1,
+   "enabled": true,
+   "severity": "medium",
+   "threshold": 5000000,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "auth_failures",
+   "version": 1,
+   "enabled": true,
+   "severity": "high",
+   "threshold": 5,
+   "window_seconds": 60,
+   "cooldown_seconds": 300,
+   "params": {}
+  },
+  {
+   "key": "excessive_connections",
+   "version": 1,
+   "enabled": true,
+   "severity": "medium",
+   "threshold": 100,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "port_scan",
+   "version": 1,
+   "enabled": true,
+   "severity": "high",
+   "threshold": 15,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "suspicious_dns",
+   "version": 2,
+   "enabled": true,
+   "severity": "low",
+   "threshold": 100,
+   "window_seconds": 60,
+   "cooldown_seconds": 300,
+   "params": {
+    "watchlist": [
+     "malware-eval.test"
+    ],
+    "distinct_names": 50,
+    "max_label_length": 52,
+    "watchlist_severity": "medium"
+   }
+  }
+ ],
+ "rules_at_start": [
+  {
+   "key": "abnormal_traffic",
+   "version": 1,
+   "enabled": true,
+   "severity": "medium",
+   "threshold": 5000000,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "auth_failures",
+   "version": 1,
+   "enabled": true,
+   "severity": "high",
+   "threshold": 5,
+   "window_seconds": 60,
+   "cooldown_seconds": 300,
+   "params": {}
+  },
+  {
+   "key": "excessive_connections",
+   "version": 1,
+   "enabled": true,
+   "severity": "medium",
+   "threshold": 100,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "port_scan",
+   "version": 1,
+   "enabled": true,
+   "severity": "high",
+   "threshold": 15,
+   "window_seconds": 10,
+   "cooldown_seconds": 60,
+   "params": {}
+  },
+  {
+   "key": "suspicious_dns",
+   "version": 2,
+   "enabled": true,
+   "severity": "low",
+   "threshold": 100,
+   "window_seconds": 60,
+   "cooldown_seconds": 300,
+   "params": {
+    "watchlist": [
+     "malware-eval.test"
+    ],
+    "distinct_names": 50,
+    "max_label_length": 52,
+    "watchlist_severity": "medium"
+   }
+  }
+ ],
+ "result": {
+  "trials_scored": 250,
+  "trials_by_kind": {
+   "positive": 150,
+   "evasion": 20,
+   "hard_negative": 50,
+   "normal": 30
+  },
+  "trials_excluded": [],
+  "per_category": {
+   "port_scan": {
+    "tp": 30,
+    "fn": 0,
+    "fp": 0,
+    "tn": 200,
+    "recall": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "precision": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "fpr": {
+     "k": 0,
+     "n": 200,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.0188
+     ]
+    },
+    "fp_by_negative_type": {
+     "normal": {
+      "k": 0,
+      "n": 30,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.1135
+      ]
+     },
+     "hard_negative": {
+      "k": 0,
+      "n": 10,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.2775
+      ]
+     },
+     "other_attack": {
+      "k": 0,
+      "n": 160,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.0234
+      ]
+     }
+    },
+    "detection_delay_s": {
+     "n": 30,
+     "median": 0.823,
+     "p95": 3.777,
+     "max": 3.993
+    },
+    "crossing_to_commit_s": {
+     "n": 30,
+     "median": 0.344,
+     "p95": 0.604,
+     "max": 0.616
+    },
+    "tp_event_severity": {
+     "critical": 7,
+     "high": 23
+    }
+   },
+   "excessive_connections": {
+    "tp": 30,
+    "fn": 0,
+    "fp": 0,
+    "tn": 220,
+    "recall": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "precision": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "fpr": {
+     "k": 0,
+     "n": 220,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "fp_by_negative_type": {
+     "normal": {
+      "k": 0,
+      "n": 30,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.1135
+      ]
+     },
+     "hard_negative": {
+      "k": 0,
+      "n": 10,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.2775
+      ]
+     },
+     "other_attack": {
+      "k": 0,
+      "n": 180,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.0209
+      ]
+     }
+    },
+    "detection_delay_s": {
+     "n": 30,
+     "median": 1.602,
+     "p95": 3.867,
+     "max": 7.004
+    },
+    "crossing_to_commit_s": {
+     "n": 30,
+     "median": 0.247,
+     "p95": 0.461,
+     "max": 0.48
+    },
+    "tp_event_severity": {
+     "medium": 24,
+     "high": 6
+    }
+   },
+   "auth_failures": {
+    "tp": 30,
+    "fn": 0,
+    "fp": 0,
+    "tn": 220,
+    "recall": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "precision": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "fpr": {
+     "k": 0,
+     "n": 220,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "fp_by_negative_type": {
+     "normal": {
+      "k": 0,
+      "n": 30,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.1135
+      ]
+     },
+     "hard_negative": {
+      "k": 0,
+      "n": 10,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.2775
+      ]
+     },
+     "other_attack": {
+      "k": 0,
+      "n": 180,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.0209
+      ]
+     }
+    },
+    "detection_delay_s": {
+     "n": 30,
+     "median": 2.137,
+     "p95": 5.616,
+     "max": 5.662
+    },
+    "crossing_to_commit_s": {
+     "n": 30,
+     "median": 0.319,
+     "p95": 0.542,
+     "max": 0.573
+    },
+    "tp_event_severity": {
+     "high": 30
+    }
+   },
+   "abnormal_traffic": {
+    "tp": 30,
+    "fn": 0,
+    "fp": 0,
+    "tn": 220,
+    "recall": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "precision": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "fpr": {
+     "k": 0,
+     "n": 220,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "fp_by_negative_type": {
+     "normal": {
+      "k": 0,
+      "n": 30,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.1135
+      ]
+     },
+     "hard_negative": {
+      "k": 0,
+      "n": 10,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.2775
+      ]
+     },
+     "other_attack": {
+      "k": 0,
+      "n": 180,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.0209
+      ]
+     }
+    },
+    "detection_delay_s": {
+     "n": 30,
+     "median": 5.063,
+     "p95": 6.521,
+     "max": 6.64
+    },
+    "crossing_to_commit_s": {
+     "n": 30,
+     "median": 0.002,
+     "p95": 0.003,
+     "max": 0.003
+    },
+    "tp_event_severity": {
+     "medium": 30
+    }
+   },
+   "suspicious_dns": {
+    "tp": 30,
+    "fn": 0,
+    "fp": 0,
+    "tn": 220,
+    "recall": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "precision": {
+     "k": 30,
+     "n": 30,
+     "value": 1.0,
+     "ci95": [
+      0.8865,
+      1.0
+     ]
+    },
+    "fpr": {
+     "k": 0,
+     "n": 220,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "fp_by_negative_type": {
+     "normal": {
+      "k": 0,
+      "n": 30,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.1135
+      ]
+     },
+     "hard_negative": {
+      "k": 0,
+      "n": 10,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.2775
+      ]
+     },
+     "other_attack": {
+      "k": 0,
+      "n": 180,
+      "value": 0.0,
+      "ci95": [
+       0.0,
+       0.0209
+      ]
+     }
+    },
+    "detection_delay_s": {
+     "n": 30,
+     "median": 1.573,
+     "p95": 4.467,
+     "max": 4.826
+    },
+    "crossing_to_commit_s": {
+     "n": 30,
+     "median": 0.256,
+     "p95": 0.46,
+     "max": 0.468
+    },
+    "tp_event_severity": {
+     "medium": 7,
+     "low": 23
+    }
+   }
+  },
+  "evasion": {
+   "null_scan": {
+    "n": 4,
+    "detected": 0,
+    "recall": {
+     "k": 0,
+     "n": 4,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.4899
+     ]
+    }
+   },
+   "fin_scan": {
+    "n": 4,
+    "detected": 0,
+    "recall": {
+     "k": 0,
+     "n": 4,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.4899
+     ]
+    }
+   },
+   "slow_scan": {
+    "n": 4,
+    "detected": 0,
+    "recall": {
+     "k": 0,
+     "n": 4,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.4899
+     ]
+    }
+   },
+   "udp_scan": {
+    "n": 4,
+    "detected": 0,
+    "recall": {
+     "k": 0,
+     "n": 4,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.4899
+     ]
+    }
+   },
+   "xmas_scan": {
+    "n": 4,
+    "detected": 0,
+    "recall": {
+     "k": 0,
+     "n": 4,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.4899
+     ]
+    }
+   }
+  },
+  "unexpected_events": [],
+  "trial_detail": {
+   "T0001": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.100",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 1,
+      "dedup_key": "abnormal_traffic|10.10.10.100",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 18,
+      "rule_version": 1,
+      "src": "10.10.10.100",
+      "is_open": false,
+      "created": 1794319856.377737,
+      "detected": 1794319856.374582,
+      "crossed_at": 1794319856.3745816,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0002": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.101",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 2,
+      "dedup_key": "auth_failures|10.10.10.101",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 8,
+      "rule_version": 1,
+      "src": "10.10.10.101",
+      "is_open": false,
+      "created": 1794319870.743607,
+      "detected": 1794319870.171034,
+      "crossed_at": 1794319870.171034,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0004": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "null_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.102",
+    "detected": [],
+    "events": []
+   },
+   "T0005": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.103",
+    "detected": [],
+    "events": []
+   },
+   "T0008": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "null_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.104",
+    "detected": [],
+    "events": []
+   },
+   "T0012": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.105",
+    "detected": [],
+    "events": []
+   },
+   "T0016": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.106",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 3,
+      "dedup_key": "suspicious_dns|10.10.10.106|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 3,
+      "rule_version": 2,
+      "src": "10.10.10.106",
+      "is_open": false,
+      "created": 1794319895.85,
+      "detected": 1794319895.648168,
+      "crossed_at": 1794319895.6481676,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0020": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.180",
+    "detected": [],
+    "events": []
+   },
+   "T0021": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.107",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 4,
+      "dedup_key": "abnormal_traffic|10.10.10.107",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 22,
+      "rule_version": 1,
+      "src": "10.10.10.107",
+      "is_open": false,
+      "created": 1794319908.680737,
+      "detected": 1794319908.678106,
+      "crossed_at": 1794319908.6781058,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0024": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.108",
+    "detected": [],
+    "events": []
+   },
+   "T0025": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.109",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 5,
+      "dedup_key": "suspicious_dns|10.10.10.109|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 102,
+      "rule_version": 2,
+      "src": "10.10.10.109",
+      "is_open": false,
+      "created": 1794319935.515801,
+      "detected": 1794319935.283135,
+      "crossed_at": 1794319935.2831354,
+      "alerts": 1
+     },
+     {
+      "id": 6,
+      "dedup_key": "suspicious_dns|10.10.10.109|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 52,
+      "rule_version": 2,
+      "src": "10.10.10.109",
+      "is_open": false,
+      "created": 1794319937.105739,
+      "detected": 1794319936.939582,
+      "crossed_at": 1794319936.9395816,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0026": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.110",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 7,
+      "dedup_key": "suspicious_dns|10.10.10.110|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 72,
+      "rule_version": 2,
+      "src": "10.10.10.110",
+      "is_open": false,
+      "created": 1794319944.841242,
+      "detected": 1794319944.718701,
+      "crossed_at": 1794319944.7187014,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0027": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.111",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 8,
+      "dedup_key": "port_scan|10.10.10.111|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 146,
+      "rule_version": 1,
+      "src": "10.10.10.111",
+      "is_open": false,
+      "created": 1794319951.067695,
+      "detected": 1794319950.576542,
+      "crossed_at": 1794319950.5765421,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0028": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.112",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 9,
+      "dedup_key": "excessive_connections|10.10.10.112|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 21,
+      "rule_version": 1,
+      "src": "10.10.10.112",
+      "is_open": false,
+      "created": 1794319962.555078,
+      "detected": 1794319962.390672,
+      "crossed_at": 1794319962.3906722,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0030": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.113",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 10,
+      "dedup_key": "excessive_connections|10.10.10.113|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 143,
+      "rule_version": 1,
+      "src": "10.10.10.113",
+      "is_open": false,
+      "created": 1794319967.478544,
+      "detected": 1794319967.272671,
+      "crossed_at": 1794319967.2726712,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0031": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.114",
+    "detected": [],
+    "events": []
+   },
+   "T0032": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.115",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 11,
+      "dedup_key": "excessive_connections|10.10.10.115|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 11,
+      "rule_version": 1,
+      "src": "10.10.10.115",
+      "is_open": false,
+      "created": 1794319982.99689,
+      "detected": 1794319982.597262,
+      "crossed_at": 1794319982.597262,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0033": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.116",
+    "detected": [],
+    "events": []
+   },
+   "T0035": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.117",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 12,
+      "dedup_key": "port_scan|10.10.10.117|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 2,
+      "rule_version": 1,
+      "src": "10.10.10.117",
+      "is_open": false,
+      "created": 1794319992.369115,
+      "detected": 1794319991.966911,
+      "crossed_at": 1794319991.966911,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0037": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.118",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 13,
+      "dedup_key": "port_scan|10.10.10.118|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 76,
+      "rule_version": 1,
+      "src": "10.10.10.118",
+      "is_open": false,
+      "created": 1794319995.293118,
+      "detected": 1794319995.087032,
+      "crossed_at": 1794319995.0870326,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0038": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.119",
+    "detected": [],
+    "events": []
+   },
+   "T0039": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.181",
+    "detected": [],
+    "events": []
+   },
+   "T0040": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.120",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 14,
+      "dedup_key": "excessive_connections|10.10.10.120|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 148,
+      "rule_version": 1,
+      "src": "10.10.10.120",
+      "is_open": false,
+      "created": 1794320011.064908,
+      "detected": 1794320010.963012,
+      "crossed_at": 1794320010.963012,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0041": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.121",
+    "detected": [],
+    "events": []
+   },
+   "T0042": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.122",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 15,
+      "dedup_key": "excessive_connections|10.10.10.122|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 1740,
+      "rule_version": 1,
+      "src": "10.10.10.122",
+      "is_open": false,
+      "created": 1794320027.134026,
+      "detected": 1794320026.971865,
+      "crossed_at": 1794320026.9718652,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0044": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.123",
+    "detected": [],
+    "events": []
+   },
+   "T0045": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.124",
+    "detected": [],
+    "events": []
+   },
+   "T0046": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.182",
+    "detected": [],
+    "events": []
+   },
+   "T0049": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.125",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 16,
+      "dedup_key": "port_scan|10.10.10.125|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 5,
+      "rule_version": 1,
+      "src": "10.10.10.125",
+      "is_open": false,
+      "created": 1794320094.344366,
+      "detected": 1794320094.341688,
+      "crossed_at": 1794320094.3416884,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0050": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.126",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 17,
+      "dedup_key": "abnormal_traffic|10.10.10.126",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 28,
+      "rule_version": 1,
+      "src": "10.10.10.126",
+      "is_open": false,
+      "created": 1794320102.115348,
+      "detected": 1794320102.114006,
+      "crossed_at": 1794320102.1140056,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0053": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.183",
+    "detected": [],
+    "events": []
+   },
+   "T0055": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.127",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 18,
+      "dedup_key": "suspicious_dns|10.10.10.127|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.127",
+      "is_open": false,
+      "created": 1794320117.990323,
+      "detected": 1794320117.588276,
+      "crossed_at": 1794320117.5882757,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0059": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.128",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 19,
+      "dedup_key": "port_scan|10.10.10.128|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 855,
+      "rule_version": 1,
+      "src": "10.10.10.128",
+      "is_open": false,
+      "created": 1794320120.905908,
+      "detected": 1794320120.674746,
+      "crossed_at": 1794320120.674746,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0062": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.129",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 20,
+      "dedup_key": "auth_failures|10.10.10.129",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.129",
+      "is_open": false,
+      "created": 1794320129.16048,
+      "detected": 1794320128.85624,
+      "crossed_at": 1794320128.8562403,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0063": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.130",
+    "detected": [],
+    "events": []
+   },
+   "T0064": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.131",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 21,
+      "dedup_key": "port_scan|10.10.10.131|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 149,
+      "rule_version": 1,
+      "src": "10.10.10.131",
+      "is_open": false,
+      "created": 1794320139.654034,
+      "detected": 1794320139.479723,
+      "crossed_at": 1794320139.4797227,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0066": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.132",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 22,
+      "dedup_key": "port_scan|10.10.10.132|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 14,
+      "rule_version": 1,
+      "src": "10.10.10.132",
+      "is_open": false,
+      "created": 1794320152.942597,
+      "detected": 1794320152.489949,
+      "crossed_at": 1794320152.489949,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0067": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.133",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 23,
+      "dedup_key": "abnormal_traffic|10.10.10.133",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 27,
+      "rule_version": 1,
+      "src": "10.10.10.133",
+      "is_open": false,
+      "created": 1794320162.972581,
+      "detected": 1794320162.970967,
+      "crossed_at": 1794320162.9709666,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0069": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.134",
+    "detected": [],
+    "events": []
+   },
+   "T0070": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.135",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 24,
+      "dedup_key": "auth_failures|10.10.10.135",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 8,
+      "rule_version": 1,
+      "src": "10.10.10.135",
+      "is_open": false,
+      "created": 1794320183.430726,
+      "detected": 1794320182.893866,
+      "crossed_at": 1794320182.8938663,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0071": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.136",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 25,
+      "dedup_key": "suspicious_dns|10.10.10.136|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 120,
+      "rule_version": 2,
+      "src": "10.10.10.136",
+      "is_open": false,
+      "created": 1794320197.465482,
+      "detected": 1794320197.186313,
+      "crossed_at": 1794320197.1863132,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0072": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.137",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 26,
+      "dedup_key": "auth_failures|10.10.10.137",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 2,
+      "rule_version": 1,
+      "src": "10.10.10.137",
+      "is_open": false,
+      "created": 1794320209.956769,
+      "detected": 1794320209.411264,
+      "crossed_at": 1794320209.4112644,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0073": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.138",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 27,
+      "dedup_key": "auth_failures|10.10.10.138",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.138",
+      "is_open": false,
+      "created": 1794320214.532163,
+      "detected": 1794320214.414654,
+      "crossed_at": 1794320214.4146545,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0074": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.184",
+    "detected": [],
+    "events": []
+   },
+   "T0075": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.139",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 28,
+      "dedup_key": "suspicious_dns|10.10.10.139|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.139",
+      "is_open": false,
+      "created": 1794320221.789548,
+      "detected": 1794320221.38717,
+      "crossed_at": 1794320221.3871706,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0076": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.140",
+    "detected": [],
+    "events": []
+   },
+   "T0077": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.141",
+    "detected": [],
+    "events": []
+   },
+   "T0079": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.142",
+    "detected": [],
+    "events": []
+   },
+   "T0080": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.143",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 29,
+      "dedup_key": "suspicious_dns|10.10.10.143|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 69,
+      "rule_version": 2,
+      "src": "10.10.10.143",
+      "is_open": false,
+      "created": 1794320242.084671,
+      "detected": 1794320241.61674,
+      "crossed_at": 1794320241.6167395,
+      "alerts": 1
+     },
+     {
+      "id": 30,
+      "dedup_key": "suspicious_dns|10.10.10.143|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 19,
+      "rule_version": 2,
+      "src": "10.10.10.143",
+      "is_open": false,
+      "created": 1794320244.117444,
+      "detected": 1794320243.735243,
+      "crossed_at": 1794320243.7352428,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0082": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.144",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 31,
+      "dedup_key": "abnormal_traffic|10.10.10.144",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 25,
+      "rule_version": 1,
+      "src": "10.10.10.144",
+      "is_open": false,
+      "created": 1794320251.665004,
+      "detected": 1794320251.663076,
+      "crossed_at": 1794320251.6630754,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0085": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "fin_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.145",
+    "detected": [],
+    "events": []
+   },
+   "T0086": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.146",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 32,
+      "dedup_key": "abnormal_traffic|10.10.10.146",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 17,
+      "rule_version": 1,
+      "src": "10.10.10.146",
+      "is_open": false,
+      "created": 1794320271.932882,
+      "detected": 1794320271.930991,
+      "crossed_at": 1794320271.9309914,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0087": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.147",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 33,
+      "dedup_key": "suspicious_dns|10.10.10.147|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.147",
+      "is_open": false,
+      "created": 1794320281.193286,
+      "detected": 1794320280.791266,
+      "crossed_at": 1794320280.7912662,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0088": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.148",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 34,
+      "dedup_key": "abnormal_traffic|10.10.10.148",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 16,
+      "rule_version": 1,
+      "src": "10.10.10.148",
+      "is_open": false,
+      "created": 1794320290.247757,
+      "detected": 1794320290.246252,
+      "crossed_at": 1794320290.2462523,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0089": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.185",
+    "detected": [],
+    "events": []
+   },
+   "T0090": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.149",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 35,
+      "dedup_key": "suspicious_dns|10.10.10.149|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.149",
+      "is_open": false,
+      "created": 1794320304.315783,
+      "detected": 1794320303.98988,
+      "crossed_at": 1794320303.9898796,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0091": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.150",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 36,
+      "dedup_key": "port_scan|10.10.10.150|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 28,
+      "rule_version": 1,
+      "src": "10.10.10.150",
+      "is_open": false,
+      "created": 1794320307.285853,
+      "detected": 1794320307.08295,
+      "crossed_at": 1794320307.0829496,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0092": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.151",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 37,
+      "dedup_key": "port_scan|10.10.10.151|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 9,
+      "rule_version": 1,
+      "src": "10.10.10.151",
+      "is_open": false,
+      "created": 1794320310.818909,
+      "detected": 1794320310.216012,
+      "crossed_at": 1794320310.2160125,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0093": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.152",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 38,
+      "dedup_key": "abnormal_traffic|10.10.10.152",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 18,
+      "rule_version": 1,
+      "src": "10.10.10.152",
+      "is_open": false,
+      "created": 1794320319.394226,
+      "detected": 1794320319.392437,
+      "crossed_at": 1794320319.392437,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0095": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.153",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 39,
+      "dedup_key": "port_scan|10.10.10.153|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 85,
+      "rule_version": 1,
+      "src": "10.10.10.153",
+      "is_open": false,
+      "created": 1794320328.593359,
+      "detected": 1794320328.387017,
+      "crossed_at": 1794320328.3870168,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0096": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.186",
+    "detected": [],
+    "events": []
+   },
+   "T0099": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.154",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 40,
+      "dedup_key": "auth_failures|10.10.10.154",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.154",
+      "is_open": false,
+      "created": 1794320348.080888,
+      "detected": 1794320347.547635,
+      "crossed_at": 1794320347.5476353,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0100": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.155",
+    "detected": [],
+    "events": []
+   },
+   "T0101": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.156",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 41,
+      "dedup_key": "excessive_connections|10.10.10.156|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 11,
+      "rule_version": 1,
+      "src": "10.10.10.156",
+      "is_open": false,
+      "created": 1794320363.628403,
+      "detected": 1794320363.236181,
+      "crossed_at": 1794320363.236181,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0102": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.157",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 42,
+      "dedup_key": "abnormal_traffic|10.10.10.157",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 17,
+      "rule_version": 1,
+      "src": "10.10.10.157",
+      "is_open": false,
+      "created": 1794320373.255248,
+      "detected": 1794320373.253745,
+      "crossed_at": 1794320373.253745,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0103": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.158",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 43,
+      "dedup_key": "excessive_connections|10.10.10.158|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 253,
+      "rule_version": 1,
+      "src": "10.10.10.158",
+      "is_open": false,
+      "created": 1794320383.380924,
+      "detected": 1794320383.034527,
+      "crossed_at": 1794320383.034527,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0104": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.159",
+    "detected": [],
+    "events": []
+   },
+   "T0105": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.160",
+    "detected": [],
+    "events": []
+   },
+   "T0107": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.161",
+    "detected": [],
+    "events": []
+   },
+   "T0108": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.162",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 44,
+      "dedup_key": "abnormal_traffic|10.10.10.162",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 25,
+      "rule_version": 1,
+      "src": "10.10.10.162",
+      "is_open": false,
+      "created": 1794320467.767888,
+      "detected": 1794320467.766751,
+      "crossed_at": 1794320467.7667508,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0109": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.187",
+    "detected": [],
+    "events": []
+   },
+   "T0110": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.163",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 45,
+      "dedup_key": "abnormal_traffic|10.10.10.163",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 27,
+      "rule_version": 1,
+      "src": "10.10.10.163",
+      "is_open": false,
+      "created": 1794320487.465156,
+      "detected": 1794320487.463146,
+      "crossed_at": 1794320487.4631455,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0111": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.164",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 46,
+      "dedup_key": "abnormal_traffic|10.10.10.164",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 25,
+      "rule_version": 1,
+      "src": "10.10.10.164",
+      "is_open": false,
+      "created": 1794320502.490606,
+      "detected": 1794320502.488072,
+      "crossed_at": 1794320502.4880722,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0114": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "slow_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.165",
+    "detected": [],
+    "events": []
+   },
+   "T0115": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.166",
+    "detected": [],
+    "events": []
+   },
+   "T0116": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.167",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 47,
+      "dedup_key": "auth_failures|10.10.10.167",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.167",
+      "is_open": false,
+      "created": 1794320564.038506,
+      "detected": 1794320563.705076,
+      "crossed_at": 1794320563.7050757,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0117": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.168",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 48,
+      "dedup_key": "suspicious_dns|10.10.10.168|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.168",
+      "is_open": false,
+      "created": 1794320567.071986,
+      "detected": 1794320566.669887,
+      "crossed_at": 1794320566.6698873,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0118": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.169",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 49,
+      "dedup_key": "abnormal_traffic|10.10.10.169",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 17,
+      "rule_version": 1,
+      "src": "10.10.10.169",
+      "is_open": false,
+      "created": 1794320576.101915,
+      "detected": 1794320576.099686,
+      "crossed_at": 1794320576.099686,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0120": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.170",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 50,
+      "dedup_key": "abnormal_traffic|10.10.10.170",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 18,
+      "rule_version": 1,
+      "src": "10.10.10.170",
+      "is_open": false,
+      "created": 1794320590.779248,
+      "detected": 1794320590.777688,
+      "crossed_at": 1794320590.7776878,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0121": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.171",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 51,
+      "dedup_key": "suspicious_dns|10.10.10.171|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 3,
+      "rule_version": 2,
+      "src": "10.10.10.171",
+      "is_open": false,
+      "created": 1794320599.985165,
+      "detected": 1794320599.783559,
+      "crossed_at": 1794320599.7835586,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0122": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "fin_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.172",
+    "detected": [],
+    "events": []
+   },
+   "T0123": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.173",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 52,
+      "dedup_key": "port_scan|10.10.10.173|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 11,
+      "rule_version": 1,
+      "src": "10.10.10.173",
+      "is_open": false,
+      "created": 1794320606.629844,
+      "detected": 1794320606.026825,
+      "crossed_at": 1794320606.0268252,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0124": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.174",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 53,
+      "dedup_key": "port_scan|10.10.10.174|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 210,
+      "rule_version": 1,
+      "src": "10.10.10.174",
+      "is_open": false,
+      "created": 1794320609.997636,
+      "detected": 1794320609.552942,
+      "crossed_at": 1794320609.5529423,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0125": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "slow_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.175",
+    "detected": [],
+    "events": []
+   },
+   "T0126": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.188",
+    "detected": [],
+    "events": []
+   },
+   "T0130": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.176",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 54,
+      "dedup_key": "abnormal_traffic|10.10.10.176",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 23,
+      "rule_version": 1,
+      "src": "10.10.10.176",
+      "is_open": false,
+      "created": 1794320672.303153,
+      "detected": 1794320672.301201,
+      "crossed_at": 1794320672.301201,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0131": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.177",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 55,
+      "dedup_key": "excessive_connections|10.10.10.177|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 110,
+      "rule_version": 1,
+      "src": "10.10.10.177",
+      "is_open": false,
+      "created": 1794320685.49229,
+      "detected": 1794320685.134815,
+      "crossed_at": 1794320685.1348147,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0136": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.178",
+    "detected": [],
+    "events": []
+   },
+   "T0137": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.189",
+    "detected": [],
+    "events": []
+   },
+   "T0138": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.179",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 56,
+      "dedup_key": "excessive_connections|10.10.10.179|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 125,
+      "rule_version": 1,
+      "src": "10.10.10.179",
+      "is_open": false,
+      "created": 1794320718.197034,
+      "detected": 1794320718.038758,
+      "crossed_at": 1794320718.0387576,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0140": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.100",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 57,
+      "dedup_key": "auth_failures|10.10.10.100",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.100",
+      "is_open": false,
+      "created": 1794320724.319388,
+      "detected": 1794320723.81938,
+      "crossed_at": 1794320723.8193803,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0141": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.101",
+    "detected": [],
+    "events": []
+   },
+   "T0146": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.190",
+    "detected": [],
+    "events": []
+   },
+   "T0148": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.102",
+    "detected": [],
+    "events": []
+   },
+   "T0150": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.103",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 58,
+      "dedup_key": "auth_failures|10.10.10.103",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.103",
+      "is_open": false,
+      "created": 1794320745.480885,
+      "detected": 1794320745.335566,
+      "crossed_at": 1794320745.3355656,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0151": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.104",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 59,
+      "dedup_key": "suspicious_dns|10.10.10.104|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 2,
+      "rule_version": 2,
+      "src": "10.10.10.104",
+      "is_open": false,
+      "created": 1794320748.516484,
+      "detected": 1794320748.314942,
+      "crossed_at": 1794320748.314942,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0152": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.105",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 60,
+      "dedup_key": "auth_failures|10.10.10.105",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 7,
+      "rule_version": 1,
+      "src": "10.10.10.105",
+      "is_open": false,
+      "created": 1794320753.695251,
+      "detected": 1794320753.340566,
+      "crossed_at": 1794320753.3405657,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0154": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.106",
+    "detected": [],
+    "events": []
+   },
+   "T0155": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.107",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 61,
+      "dedup_key": "suspicious_dns|10.10.10.107|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.107",
+      "is_open": false,
+      "created": 1794320761.439647,
+      "detected": 1794320761.238117,
+      "crossed_at": 1794320761.2381172,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0156": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.108",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 62,
+      "dedup_key": "auth_failures|10.10.10.108",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.108",
+      "is_open": false,
+      "created": 1794320769.660737,
+      "detected": 1794320769.364481,
+      "crossed_at": 1794320769.3644807,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0157": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.109",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 63,
+      "dedup_key": "excessive_connections|10.10.10.109|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 256,
+      "rule_version": 1,
+      "src": "10.10.10.109",
+      "is_open": false,
+      "created": 1794320776.441587,
+      "detected": 1794320776.022898,
+      "crossed_at": 1794320776.0228982,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0158": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.110",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 64,
+      "dedup_key": "port_scan|10.10.10.110|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 35,
+      "rule_version": 1,
+      "src": "10.10.10.110",
+      "is_open": false,
+      "created": 1794320785.473832,
+      "detected": 1794320785.185964,
+      "crossed_at": 1794320785.185964,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0160": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.111",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 65,
+      "dedup_key": "auth_failures|10.10.10.111",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 6,
+      "rule_version": 1,
+      "src": "10.10.10.111",
+      "is_open": false,
+      "created": 1794320794.615212,
+      "detected": 1794320794.382251,
+      "crossed_at": 1794320794.382251,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0161": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.112",
+    "detected": [],
+    "events": []
+   },
+   "T0162": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.191",
+    "detected": [],
+    "events": []
+   },
+   "T0163": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.113",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 66,
+      "dedup_key": "excessive_connections|10.10.10.113|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 836,
+      "rule_version": 1,
+      "src": "10.10.10.113",
+      "is_open": false,
+      "created": 1794320817.686119,
+      "detected": 1794320817.453827,
+      "crossed_at": 1794320817.453827,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0165": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "slow_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.114",
+    "detected": [],
+    "events": []
+   },
+   "T0166": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.115",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 67,
+      "dedup_key": "suspicious_dns|10.10.10.115|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 140,
+      "rule_version": 2,
+      "src": "10.10.10.115",
+      "is_open": false,
+      "created": 1794320866.915028,
+      "detected": 1794320866.72872,
+      "crossed_at": 1794320866.7287202,
+      "alerts": 1
+     },
+     {
+      "id": 68,
+      "dedup_key": "suspicious_dns|10.10.10.115|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 90,
+      "rule_version": 2,
+      "src": "10.10.10.115",
+      "is_open": false,
+      "created": 1794320868.422853,
+      "detected": 1794320868.051591,
+      "crossed_at": 1794320868.0515907,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0168": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.116",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 69,
+      "dedup_key": "suspicious_dns|10.10.10.116|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 81,
+      "rule_version": 2,
+      "src": "10.10.10.116",
+      "is_open": false,
+      "created": 1794320875.558821,
+      "detected": 1794320875.364958,
+      "crossed_at": 1794320875.364958,
+      "alerts": 1
+     },
+     {
+      "id": 70,
+      "dedup_key": "suspicious_dns|10.10.10.116|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 31,
+      "rule_version": 2,
+      "src": "10.10.10.116",
+      "is_open": false,
+      "created": 1794320877.673939,
+      "detected": 1794320877.288102,
+      "crossed_at": 1794320877.2881021,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0169": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.117",
+    "detected": [],
+    "events": []
+   },
+   "T0170": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.118",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 71,
+      "dedup_key": "port_scan|10.10.10.118|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 16,
+      "rule_version": 1,
+      "src": "10.10.10.118",
+      "is_open": false,
+      "created": 1794320890.359991,
+      "detected": 1794320890.35897,
+      "crossed_at": 1794320890.3589694,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0174": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.192",
+    "detected": [],
+    "events": []
+   },
+   "T0175": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.119",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 72,
+      "dedup_key": "excessive_connections|10.10.10.119|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 151,
+      "rule_version": 1,
+      "src": "10.10.10.119",
+      "is_open": false,
+      "created": 1794320902.431701,
+      "detected": 1794320902.346476,
+      "crossed_at": 1794320902.3464766,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0178": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.193",
+    "detected": [],
+    "events": []
+   },
+   "T0179": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.120",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 73,
+      "dedup_key": "abnormal_traffic|10.10.10.120",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 22,
+      "rule_version": 1,
+      "src": "10.10.10.120",
+      "is_open": false,
+      "created": 1794320916.654482,
+      "detected": 1794320916.652835,
+      "crossed_at": 1794320916.6528351,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0181": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "null_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.121",
+    "detected": [],
+    "events": []
+   },
+   "T0182": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "udp_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.122",
+    "detected": [],
+    "events": []
+   },
+   "T0183": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.123",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 74,
+      "dedup_key": "excessive_connections|10.10.10.123|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 410,
+      "rule_version": 1,
+      "src": "10.10.10.123",
+      "is_open": false,
+      "created": 1794320936.529075,
+      "detected": 1794320936.048881,
+      "crossed_at": 1794320936.0488813,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0185": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.124",
+    "detected": [],
+    "events": []
+   },
+   "T0186": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "null_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.125",
+    "detected": [],
+    "events": []
+   },
+   "T0187": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.126",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 75,
+      "dedup_key": "auth_failures|10.10.10.126",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.126",
+      "is_open": false,
+      "created": 1794320951.986564,
+      "detected": 1794320951.503735,
+      "crossed_at": 1794320951.5037346,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0188": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.127",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 76,
+      "dedup_key": "auth_failures|10.10.10.127",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 7,
+      "rule_version": 1,
+      "src": "10.10.10.127",
+      "is_open": false,
+      "created": 1794320956.512178,
+      "detected": 1794320956.007833,
+      "crossed_at": 1794320956.0078332,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0190": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.128",
+    "detected": [],
+    "events": []
+   },
+   "T0191": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.129",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 77,
+      "dedup_key": "excessive_connections|10.10.10.129|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 591,
+      "rule_version": 1,
+      "src": "10.10.10.129",
+      "is_open": false,
+      "created": 1794320966.064958,
+      "detected": 1794320965.952164,
+      "crossed_at": 1794320965.9521637,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0192": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.130",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 78,
+      "dedup_key": "abnormal_traffic|10.10.10.130",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 28,
+      "rule_version": 1,
+      "src": "10.10.10.130",
+      "is_open": false,
+      "created": 1794320975.560543,
+      "detected": 1794320975.55838,
+      "crossed_at": 1794320975.5583804,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0194": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.131",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 79,
+      "dedup_key": "abnormal_traffic|10.10.10.131",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 16,
+      "rule_version": 1,
+      "src": "10.10.10.131",
+      "is_open": false,
+      "created": 1794320993.382547,
+      "detected": 1794320993.380841,
+      "crossed_at": 1794320993.3808413,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0195": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.132",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 80,
+      "dedup_key": "auth_failures|10.10.10.132",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.132",
+      "is_open": false,
+      "created": 1794321002.594596,
+      "detected": 1794321002.536322,
+      "crossed_at": 1794321002.5363216,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0197": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.133",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 81,
+      "dedup_key": "port_scan|10.10.10.133|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 35,
+      "rule_version": 1,
+      "src": "10.10.10.133",
+      "is_open": false,
+      "created": 1794321006.323274,
+      "detected": 1794321005.918964,
+      "crossed_at": 1794321005.9189644,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0198": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.134",
+    "detected": [],
+    "events": []
+   },
+   "T0200": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.135",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 82,
+      "dedup_key": "port_scan|10.10.10.135|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 86,
+      "rule_version": 1,
+      "src": "10.10.10.135",
+      "is_open": false,
+      "created": 1794321025.431666,
+      "detected": 1794321025.007955,
+      "crossed_at": 1794321025.0079553,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0201": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "xmas_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.136",
+    "detected": [],
+    "events": []
+   },
+   "T0202": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.137",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 83,
+      "dedup_key": "excessive_connections|10.10.10.137|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 689,
+      "rule_version": 1,
+      "src": "10.10.10.137",
+      "is_open": false,
+      "created": 1794321038.720322,
+      "detected": 1794321038.254106,
+      "crossed_at": 1794321038.2541056,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0203": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.138",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 84,
+      "dedup_key": "excessive_connections|10.10.10.138|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 1462,
+      "rule_version": 1,
+      "src": "10.10.10.138",
+      "is_open": false,
+      "created": 1794321048.369624,
+      "detected": 1794321048.286745,
+      "crossed_at": 1794321048.2867448,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0204": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.194",
+    "detected": [],
+    "events": []
+   },
+   "T0207": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "udp_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.139",
+    "detected": [],
+    "events": []
+   },
+   "T0209": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.140",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 85,
+      "dedup_key": "excessive_connections|10.10.10.140|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 1478,
+      "rule_version": 1,
+      "src": "10.10.10.140",
+      "is_open": false,
+      "created": 1794321065.45187,
+      "detected": 1794321065.080764,
+      "crossed_at": 1794321065.0807638,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0210": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "xmas_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.141",
+    "detected": [],
+    "events": []
+   },
+   "T0212": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "xmas_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.142",
+    "detected": [],
+    "events": []
+   },
+   "T0213": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.143",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 86,
+      "dedup_key": "auth_failures|10.10.10.143",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.143",
+      "is_open": false,
+      "created": 1794321079.844846,
+      "detected": 1794321079.586481,
+      "crossed_at": 1794321079.5864809,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0214": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.144",
+    "detected": [],
+    "events": []
+   },
+   "T0218": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.145",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 87,
+      "dedup_key": "suspicious_dns|10.10.10.145|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 149,
+      "rule_version": 2,
+      "src": "10.10.10.145",
+      "is_open": false,
+      "created": 1794321087.235256,
+      "detected": 1794321086.880848,
+      "crossed_at": 1794321086.8808477,
+      "alerts": 1
+     },
+     {
+      "id": 88,
+      "dedup_key": "suspicious_dns|10.10.10.145|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 99,
+      "rule_version": 2,
+      "src": "10.10.10.145",
+      "is_open": false,
+      "created": 1794321088.245363,
+      "detected": 1794321088.143363,
+      "crossed_at": 1794321088.143363,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0219": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.146",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 89,
+      "dedup_key": "excessive_connections|10.10.10.146|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 2188,
+      "rule_version": 1,
+      "src": "10.10.10.146",
+      "is_open": false,
+      "created": 1794321094.224248,
+      "detected": 1794321093.971572,
+      "crossed_at": 1794321093.9715717,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0220": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.147",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 90,
+      "dedup_key": "auth_failures|10.10.10.147",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.147",
+      "is_open": false,
+      "created": 1794321105.323565,
+      "detected": 1794321105.102502,
+      "crossed_at": 1794321105.102502,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0222": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.148",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 91,
+      "dedup_key": "port_scan|10.10.10.148|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 215,
+      "rule_version": 1,
+      "src": "10.10.10.148",
+      "is_open": false,
+      "created": 1794321109.538408,
+      "detected": 1794321109.128111,
+      "crossed_at": 1794321109.1281111,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0223": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.195",
+    "detected": [],
+    "events": []
+   },
+   "T0224": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.149",
+    "detected": [],
+    "events": []
+   },
+   "T0225": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.150",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 92,
+      "dedup_key": "port_scan|10.10.10.150|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.150",
+      "is_open": false,
+      "created": 1794321134.907698,
+      "detected": 1794321134.902226,
+      "crossed_at": 1794321134.9022264,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0226": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.196",
+    "detected": [],
+    "events": []
+   },
+   "T0229": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.197",
+    "detected": [],
+    "events": []
+   },
+   "T0230": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.151",
+    "detected": [],
+    "events": []
+   },
+   "T0232": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.152",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 93,
+      "dedup_key": "excessive_connections|10.10.10.152|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 1417,
+      "rule_version": 1,
+      "src": "10.10.10.152",
+      "is_open": false,
+      "created": 1794321159.773916,
+      "detected": 1794321159.450835,
+      "crossed_at": 1794321159.4508352,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0234": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.153",
+    "detected": [],
+    "events": []
+   },
+   "T0236": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.154",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 94,
+      "dedup_key": "auth_failures|10.10.10.154",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.154",
+      "is_open": false,
+      "created": 1794321171.364118,
+      "detected": 1794321171.151607,
+      "crossed_at": 1794321171.1516073,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0238": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.155",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 95,
+      "dedup_key": "port_scan|10.10.10.155|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 26,
+      "rule_version": 1,
+      "src": "10.10.10.155",
+      "is_open": false,
+      "created": 1794321175.014448,
+      "detected": 1794321174.611028,
+      "crossed_at": 1794321174.6110277,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0239": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "xmas_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.156",
+    "detected": [],
+    "events": []
+   },
+   "T0240": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.198",
+    "detected": [],
+    "events": []
+   },
+   "T0241": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.157",
+    "detected": [],
+    "events": []
+   },
+   "T0242": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.158",
+    "detected": [],
+    "events": []
+   },
+   "T0244": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.159",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 96,
+      "dedup_key": "port_scan|10.10.10.159|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 12,
+      "rule_version": 1,
+      "src": "10.10.10.159",
+      "is_open": false,
+      "created": 1794321208.299611,
+      "detected": 1794321208.098154,
+      "crossed_at": 1794321208.0981536,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0245": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "fin_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.160",
+    "detected": [],
+    "events": []
+   },
+   "T0247": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.161",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 97,
+      "dedup_key": "suspicious_dns|10.10.10.161|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 74,
+      "rule_version": 2,
+      "src": "10.10.10.161",
+      "is_open": false,
+      "created": 1794321222.320592,
+      "detected": 1794321221.96681,
+      "crossed_at": 1794321221.9668102,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0248": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.162",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 98,
+      "dedup_key": "auth_failures|10.10.10.162",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 6,
+      "rule_version": 1,
+      "src": "10.10.10.162",
+      "is_open": false,
+      "created": 1794321229.71892,
+      "detected": 1794321229.18667,
+      "crossed_at": 1794321229.1866698,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0250": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.163",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 99,
+      "dedup_key": "port_scan|10.10.10.163|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 235,
+      "rule_version": 1,
+      "src": "10.10.10.163",
+      "is_open": false,
+      "created": 1794321234.745269,
+      "detected": 1794321234.345149,
+      "crossed_at": 1794321234.345149,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0252": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.199",
+    "detected": [],
+    "events": []
+   },
+   "T0253": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.164",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 100,
+      "dedup_key": "abnormal_traffic|10.10.10.164",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 27,
+      "rule_version": 1,
+      "src": "10.10.10.164",
+      "is_open": false,
+      "created": 1794321253.019835,
+      "detected": 1794321253.018236,
+      "crossed_at": 1794321253.0182357,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0254": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.165",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 101,
+      "dedup_key": "auth_failures|10.10.10.165",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 6,
+      "rule_version": 1,
+      "src": "10.10.10.165",
+      "is_open": false,
+      "created": 1794321266.383304,
+      "detected": 1794321266.209442,
+      "crossed_at": 1794321266.2094421,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0255": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.200",
+    "detected": [],
+    "events": []
+   },
+   "T0256": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.166",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 102,
+      "dedup_key": "abnormal_traffic|10.10.10.166",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 30,
+      "rule_version": 1,
+      "src": "10.10.10.166",
+      "is_open": false,
+      "created": 1794321280.805784,
+      "detected": 1794321280.80344,
+      "crossed_at": 1794321280.8034399,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0257": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.167",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 103,
+      "dedup_key": "suspicious_dns|10.10.10.167|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 99,
+      "rule_version": 2,
+      "src": "10.10.10.167",
+      "is_open": false,
+      "created": 1794321295.459022,
+      "detected": 1794321295.245578,
+      "crossed_at": 1794321295.2455776,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0258": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.168",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 104,
+      "dedup_key": "suspicious_dns|10.10.10.168|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 3,
+      "rule_version": 2,
+      "src": "10.10.10.168",
+      "is_open": false,
+      "created": 1794321301.688757,
+      "detected": 1794321301.286303,
+      "crossed_at": 1794321301.2863026,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0259": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.201",
+    "detected": [],
+    "events": []
+   },
+   "T0260": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.169",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 105,
+      "dedup_key": "auth_failures|10.10.10.169",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.169",
+      "is_open": false,
+      "created": 1794321312.651239,
+      "detected": 1794321312.242913,
+      "crossed_at": 1794321312.242913,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0261": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.170",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 106,
+      "dedup_key": "auth_failures|10.10.10.170",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 7,
+      "rule_version": 1,
+      "src": "10.10.10.170",
+      "is_open": false,
+      "created": 1794321321.400043,
+      "detected": 1794321321.252598,
+      "crossed_at": 1794321321.2525978,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0262": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.171",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 107,
+      "dedup_key": "auth_failures|10.10.10.171",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.171",
+      "is_open": false,
+      "created": 1794321336.052372,
+      "detected": 1794321335.768143,
+      "crossed_at": 1794321335.7681432,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0263": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.202",
+    "detected": [],
+    "events": []
+   },
+   "T0265": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.172",
+    "detected": [],
+    "events": []
+   },
+   "T0266": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.173",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 108,
+      "dedup_key": "suspicious_dns|10.10.10.173|long_label",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 1,
+      "rule_version": 2,
+      "src": "10.10.10.173",
+      "is_open": false,
+      "created": 1794321347.700852,
+      "detected": 1794321347.298349,
+      "crossed_at": 1794321347.2983491,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0267": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.174",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 109,
+      "dedup_key": "auth_failures|10.10.10.174",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.174",
+      "is_open": false,
+      "created": 1794321352.315653,
+      "detected": 1794321352.281968,
+      "crossed_at": 1794321352.2819676,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0268": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.175",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 110,
+      "dedup_key": "abnormal_traffic|10.10.10.175",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 19,
+      "rule_version": 1,
+      "src": "10.10.10.175",
+      "is_open": false,
+      "created": 1794321360.797506,
+      "detected": 1794321360.795343,
+      "crossed_at": 1794321360.7953434,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0269": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.176",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 111,
+      "dedup_key": "auth_failures|10.10.10.176",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 1,
+      "rule_version": 1,
+      "src": "10.10.10.176",
+      "is_open": false,
+      "created": 1794321375.153011,
+      "detected": 1794321374.798616,
+      "crossed_at": 1794321374.7986155,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0270": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.177",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 112,
+      "dedup_key": "excessive_connections|10.10.10.177|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 125,
+      "rule_version": 1,
+      "src": "10.10.10.177",
+      "is_open": false,
+      "created": 1794321379.592022,
+      "detected": 1794321379.162897,
+      "crossed_at": 1794321379.162897,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0273": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "udp_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.178",
+    "detected": [],
+    "events": []
+   },
+   "T0275": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.179",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 113,
+      "dedup_key": "port_scan|10.10.10.179|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 121,
+      "rule_version": 1,
+      "src": "10.10.10.179",
+      "is_open": false,
+      "created": 1794321390.552964,
+      "detected": 1794321390.080613,
+      "crossed_at": 1794321390.0806134,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0276": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.100",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 114,
+      "dedup_key": "suspicious_dns|10.10.10.100|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 127,
+      "rule_version": 2,
+      "src": "10.10.10.100",
+      "is_open": false,
+      "created": 1794321402.493882,
+      "detected": 1794321402.049086,
+      "crossed_at": 1794321402.0490859,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0278": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.101",
+    "detected": [],
+    "events": []
+   },
+   "T0280": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "udp_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.102",
+    "detected": [],
+    "events": []
+   },
+   "T0283": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.103",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 115,
+      "dedup_key": "port_scan|10.10.10.103|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 7,
+      "rule_version": 1,
+      "src": "10.10.10.103",
+      "is_open": false,
+      "created": 1794321423.09293,
+      "detected": 1794321422.890861,
+      "crossed_at": 1794321422.8908608,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0284": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.104",
+    "detected": [],
+    "events": []
+   },
+   "T0285": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.105",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 116,
+      "dedup_key": "port_scan|10.10.10.105|10.10.10.10",
+      "category": "port_scan",
+      "severity": "critical",
+      "hit_count": 358,
+      "rule_version": 1,
+      "src": "10.10.10.105",
+      "is_open": false,
+      "created": 1794321441.674979,
+      "detected": 1794321441.05891,
+      "crossed_at": 1794321441.0589101,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0286": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.203",
+    "detected": [],
+    "events": []
+   },
+   "T0290": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.106",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 117,
+      "dedup_key": "excessive_connections|10.10.10.106|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 174,
+      "rule_version": 1,
+      "src": "10.10.10.106",
+      "is_open": false,
+      "created": 1794321456.686339,
+      "detected": 1794321456.582296,
+      "crossed_at": 1794321456.5822961,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0291": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.107",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 118,
+      "dedup_key": "suspicious_dns|10.10.10.107|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 76,
+      "rule_version": 2,
+      "src": "10.10.10.107",
+      "is_open": false,
+      "created": 1794321466.446948,
+      "detected": 1794321466.045778,
+      "crossed_at": 1794321466.0457776,
+      "alerts": 1
+     },
+     {
+      "id": 119,
+      "dedup_key": "suspicious_dns|10.10.10.107|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 26,
+      "rule_version": 2,
+      "src": "10.10.10.107",
+      "is_open": false,
+      "created": 1794321468.527165,
+      "detected": 1794321468.045763,
+      "crossed_at": 1794321468.0457633,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0292": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.108",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 120,
+      "dedup_key": "excessive_connections|10.10.10.108|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 130,
+      "rule_version": 1,
+      "src": "10.10.10.108",
+      "is_open": false,
+      "created": 1794321474.675453,
+      "detected": 1794321474.598884,
+      "crossed_at": 1794321474.5988843,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0295": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.109",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 121,
+      "dedup_key": "suspicious_dns|10.10.10.109|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 200,
+      "rule_version": 2,
+      "src": "10.10.10.109",
+      "is_open": false,
+      "created": 1794321482.32584,
+      "detected": 1794321482.31046,
+      "crossed_at": 1794321482.3104596,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0298": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.204",
+    "detected": [],
+    "events": []
+   },
+   "T0299": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.110",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 122,
+      "dedup_key": "port_scan|10.10.10.110|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 6,
+      "rule_version": 1,
+      "src": "10.10.10.110",
+      "is_open": false,
+      "created": 1794321496.471074,
+      "detected": 1794321496.269535,
+      "crossed_at": 1794321496.269535,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0300": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.111",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 123,
+      "dedup_key": "auth_failures|10.10.10.111",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 2,
+      "rule_version": 1,
+      "src": "10.10.10.111",
+      "is_open": false,
+      "created": 1794321501.988185,
+      "detected": 1794321501.900828,
+      "crossed_at": 1794321501.9008281,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0301": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.112",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 124,
+      "dedup_key": "port_scan|10.10.10.112|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 11,
+      "rule_version": 1,
+      "src": "10.10.10.112",
+      "is_open": false,
+      "created": 1794321508.533178,
+      "detected": 1794321508.33121,
+      "crossed_at": 1794321508.33121,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0303": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.113",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 125,
+      "dedup_key": "suspicious_dns|10.10.10.113|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 2,
+      "rule_version": 2,
+      "src": "10.10.10.113",
+      "is_open": false,
+      "created": 1794321514.326952,
+      "detected": 1794321514.125071,
+      "crossed_at": 1794321514.1250706,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0304": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.114",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 126,
+      "dedup_key": "abnormal_traffic|10.10.10.114",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 23,
+      "rule_version": 1,
+      "src": "10.10.10.114",
+      "is_open": false,
+      "created": 1794321521.791694,
+      "detected": 1794321521.789844,
+      "crossed_at": 1794321521.789844,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0306": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.115",
+    "detected": [],
+    "events": []
+   },
+   "T0310": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.116",
+    "detected": [],
+    "events": []
+   },
+   "T0311": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.117",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 127,
+      "dedup_key": "auth_failures|10.10.10.117",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 6,
+      "rule_version": 1,
+      "src": "10.10.10.117",
+      "is_open": false,
+      "created": 1794321541.03088,
+      "detected": 1794321540.928284,
+      "crossed_at": 1794321540.9282842,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0314": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.118",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 128,
+      "dedup_key": "excessive_connections|10.10.10.118|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 84,
+      "rule_version": 1,
+      "src": "10.10.10.118",
+      "is_open": false,
+      "created": 1794321546.104278,
+      "detected": 1794321545.904164,
+      "crossed_at": 1794321545.9041638,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0315": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.119",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 129,
+      "dedup_key": "suspicious_dns|10.10.10.119|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 62,
+      "rule_version": 2,
+      "src": "10.10.10.119",
+      "is_open": false,
+      "created": 1794321554.932958,
+      "detected": 1794321554.882586,
+      "crossed_at": 1794321554.8825855,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0316": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.120",
+    "detected": [],
+    "events": []
+   },
+   "T0317": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.205",
+    "detected": [],
+    "events": []
+   },
+   "T0319": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.121",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 130,
+      "dedup_key": "excessive_connections|10.10.10.121|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "high",
+      "hit_count": 1520,
+      "rule_version": 1,
+      "src": "10.10.10.121",
+      "is_open": false,
+      "created": 1794321576.357906,
+      "detected": 1794321576.197432,
+      "crossed_at": 1794321576.1974323,
+      "alerts": 2
+     }
+    ]
+   },
+   "T0320": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.122",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 131,
+      "dedup_key": "abnormal_traffic|10.10.10.122",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 26,
+      "rule_version": 1,
+      "src": "10.10.10.122",
+      "is_open": false,
+      "created": 1794321589.417276,
+      "detected": 1794321589.415652,
+      "crossed_at": 1794321589.4156516,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0321": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.206",
+    "detected": [],
+    "events": []
+   },
+   "T0322": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.123",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 132,
+      "dedup_key": "abnormal_traffic|10.10.10.123",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 22,
+      "rule_version": 1,
+      "src": "10.10.10.123",
+      "is_open": false,
+      "created": 1794321614.417213,
+      "detected": 1794321614.415006,
+      "crossed_at": 1794321614.4150064,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0323": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.124",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 133,
+      "dedup_key": "port_scan|10.10.10.124|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 4,
+      "rule_version": 1,
+      "src": "10.10.10.124",
+      "is_open": false,
+      "created": 1794321624.625131,
+      "detected": 1794321624.222987,
+      "crossed_at": 1794321624.222987,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0324": {
+    "kind": "hard_negative",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.125",
+    "detected": [],
+    "events": []
+   },
+   "T0325": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.126",
+    "detected": [],
+    "events": []
+   },
+   "T0327": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.127",
+    "detected": [],
+    "events": []
+   },
+   "T0328": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.128",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 134,
+      "dedup_key": "suspicious_dns|10.10.10.128|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 24,
+      "rule_version": 2,
+      "src": "10.10.10.128",
+      "is_open": false,
+      "created": 1794321645.812837,
+      "detected": 1794321645.346268,
+      "crossed_at": 1794321645.3462677,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0329": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "fin_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.129",
+    "detected": [],
+    "events": []
+   },
+   "T0330": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.130",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 135,
+      "dedup_key": "excessive_connections|10.10.10.130|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 280,
+      "rule_version": 1,
+      "src": "10.10.10.130",
+      "is_open": false,
+      "created": 1794321653.770524,
+      "detected": 1794321653.528922,
+      "crossed_at": 1794321653.528922,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0333": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.131",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 136,
+      "dedup_key": "suspicious_dns|10.10.10.131|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 138,
+      "rule_version": 2,
+      "src": "10.10.10.131",
+      "is_open": false,
+      "created": 1794321663.544669,
+      "detected": 1794321663.092372,
+      "crossed_at": 1794321663.0923715,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0334": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.132",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 137,
+      "dedup_key": "port_scan|10.10.10.132|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 12,
+      "rule_version": 1,
+      "src": "10.10.10.132",
+      "is_open": false,
+      "created": 1794321675.083873,
+      "detected": 1794321674.831372,
+      "crossed_at": 1794321674.8313718,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0335": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.133",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 138,
+      "dedup_key": "excessive_connections|10.10.10.133|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 96,
+      "rule_version": 1,
+      "src": "10.10.10.133",
+      "is_open": false,
+      "created": 1794321683.624676,
+      "detected": 1794321683.261778,
+      "crossed_at": 1794321683.2617784,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0336": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.134",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 139,
+      "dedup_key": "abnormal_traffic|10.10.10.134",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 21,
+      "rule_version": 1,
+      "src": "10.10.10.134",
+      "is_open": false,
+      "created": 1794321694.234891,
+      "detected": 1794321694.232385,
+      "crossed_at": 1794321694.2323854,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0337": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.135",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 140,
+      "dedup_key": "abnormal_traffic|10.10.10.135",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 26,
+      "rule_version": 1,
+      "src": "10.10.10.135",
+      "is_open": false,
+      "created": 1794321707.758687,
+      "detected": 1794321707.756643,
+      "crossed_at": 1794321707.756643,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0338": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.136",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 141,
+      "dedup_key": "abnormal_traffic|10.10.10.136",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 25,
+      "rule_version": 1,
+      "src": "10.10.10.136",
+      "is_open": false,
+      "created": 1794321722.822862,
+      "detected": 1794321722.821073,
+      "crossed_at": 1794321722.8210728,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0340": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.137",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 142,
+      "dedup_key": "suspicious_dns|10.10.10.137|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 97,
+      "rule_version": 2,
+      "src": "10.10.10.137",
+      "is_open": false,
+      "created": 1794321735.548194,
+      "detected": 1794321735.410006,
+      "crossed_at": 1794321735.4100056,
+      "alerts": 1
+     },
+     {
+      "id": 143,
+      "dedup_key": "suspicious_dns|10.10.10.137|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 47,
+      "rule_version": 2,
+      "src": "10.10.10.137",
+      "is_open": false,
+      "created": 1794321737.603175,
+      "detected": 1794321737.12307,
+      "crossed_at": 1794321737.1230695,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0341": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.138",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 144,
+      "dedup_key": "excessive_connections|10.10.10.138|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 93,
+      "rule_version": 1,
+      "src": "10.10.10.138",
+      "is_open": false,
+      "created": 1794321743.207855,
+      "detected": 1794321743.006648,
+      "crossed_at": 1794321743.0066476,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0344": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.139",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 145,
+      "dedup_key": "auth_failures|10.10.10.139",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 3,
+      "rule_version": 1,
+      "src": "10.10.10.139",
+      "is_open": false,
+      "created": 1794321749.527085,
+      "detected": 1794321749.058133,
+      "crossed_at": 1794321749.0581334,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0345": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.207",
+    "detected": [],
+    "events": []
+   },
+   "T0347": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.140",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 146,
+      "dedup_key": "abnormal_traffic|10.10.10.140",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 23,
+      "rule_version": 1,
+      "src": "10.10.10.140",
+      "is_open": false,
+      "created": 1794321763.944113,
+      "detected": 1794321763.941438,
+      "crossed_at": 1794321763.9414375,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0348": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.141",
+    "detected": [],
+    "events": []
+   },
+   "T0349": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.142",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 147,
+      "dedup_key": "excessive_connections|10.10.10.142|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 31,
+      "rule_version": 1,
+      "src": "10.10.10.142",
+      "is_open": false,
+      "created": 1794321809.281254,
+      "detected": 1794321809.017734,
+      "crossed_at": 1794321809.0177338,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0351": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.143",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 148,
+      "dedup_key": "auth_failures|10.10.10.143",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 7,
+      "rule_version": 1,
+      "src": "10.10.10.143",
+      "is_open": true,
+      "created": 1794321818.06192,
+      "detected": 1794321817.608414,
+      "crossed_at": 1794321817.6084137,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0354": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.144",
+    "detected": [],
+    "events": []
+   },
+   "T0355": {
+    "kind": "hard_negative",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.145",
+    "detected": [],
+    "events": []
+   },
+   "T0356": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.146",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 149,
+      "dedup_key": "suspicious_dns|10.10.10.146|distinct_names",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 64,
+      "rule_version": 2,
+      "src": "10.10.10.146",
+      "is_open": true,
+      "created": 1794321900.686127,
+      "detected": 1794321900.463618,
+      "crossed_at": 1794321900.4636185,
+      "alerts": 1
+     },
+     {
+      "id": 150,
+      "dedup_key": "suspicious_dns|10.10.10.146|query_rate",
+      "category": "suspicious_dns",
+      "severity": "low",
+      "hit_count": 14,
+      "rule_version": 2,
+      "src": "10.10.10.146",
+      "is_open": true,
+      "created": 1794321902.809764,
+      "detected": 1794321902.67596,
+      "crossed_at": 1794321902.67596,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0357": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.147",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 151,
+      "dedup_key": "excessive_connections|10.10.10.147|10.10.10.10|8080",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 201,
+      "rule_version": 1,
+      "src": "10.10.10.147",
+      "is_open": false,
+      "created": 1794321908.426115,
+      "detected": 1794321908.149748,
+      "crossed_at": 1794321908.1497476,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0358": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.148",
+    "detected": [],
+    "events": []
+   },
+   "T0359": {
+    "kind": "positive",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [
+     "excessive_connections"
+    ],
+    "src_ip": "10.10.10.149",
+    "detected": [
+     "excessive_connections"
+    ],
+    "events": [
+     {
+      "id": 152,
+      "dedup_key": "excessive_connections|10.10.10.149|10.10.10.10|9002",
+      "category": "excessive_connections",
+      "severity": "medium",
+      "hit_count": 324,
+      "rule_version": 1,
+      "src": "10.10.10.149",
+      "is_open": false,
+      "created": 1794321949.161839,
+      "detected": 1794321948.708247,
+      "crossed_at": 1794321948.708247,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0361": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.150",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 153,
+      "dedup_key": "port_scan|10.10.10.150|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 49,
+      "rule_version": 1,
+      "src": "10.10.10.150",
+      "is_open": false,
+      "created": 1794321955.849458,
+      "detected": 1794321955.84818,
+      "crossed_at": 1794321955.8481805,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0363": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.208",
+    "detected": [],
+    "events": []
+   },
+   "T0364": {
+    "kind": "hard_negative",
+    "category": "excessive_connections",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.151",
+    "detected": [],
+    "events": []
+   },
+   "T0365": {
+    "kind": "hard_negative",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.152",
+    "detected": [],
+    "events": []
+   },
+   "T0368": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.153",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 154,
+      "dedup_key": "abnormal_traffic|10.10.10.153",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 19,
+      "rule_version": 1,
+      "src": "10.10.10.153",
+      "is_open": false,
+      "created": 1794321987.060807,
+      "detected": 1794321987.058867,
+      "crossed_at": 1794321987.058867,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0369": {
+    "kind": "normal",
+    "category": "none",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.209",
+    "detected": [],
+    "events": []
+   },
+   "T0370": {
+    "kind": "evasion",
+    "category": "port_scan",
+    "variant": "slow_scan",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.154",
+    "detected": [],
+    "events": []
+   },
+   "T0371": {
+    "kind": "positive",
+    "category": "port_scan",
+    "variant": "",
+    "expect": [
+     "port_scan"
+    ],
+    "src_ip": "10.10.10.155",
+    "detected": [
+     "port_scan"
+    ],
+    "events": [
+     {
+      "id": 155,
+      "dedup_key": "port_scan|10.10.10.155|10.10.10.10",
+      "category": "port_scan",
+      "severity": "high",
+      "hit_count": 30,
+      "rule_version": 1,
+      "src": "10.10.10.155",
+      "is_open": true,
+      "created": 1794322044.180015,
+      "detected": 1794322043.575031,
+      "crossed_at": 1794322043.5750313,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0372": {
+    "kind": "positive",
+    "category": "auth_failures",
+    "variant": "",
+    "expect": [
+     "auth_failures"
+    ],
+    "src_ip": "10.10.10.156",
+    "detected": [
+     "auth_failures"
+    ],
+    "events": [
+     {
+      "id": 156,
+      "dedup_key": "auth_failures|10.10.10.156",
+      "category": "auth_failures",
+      "severity": "high",
+      "hit_count": 2,
+      "rule_version": 1,
+      "src": "10.10.10.156",
+      "is_open": true,
+      "created": 1794322048.755766,
+      "detected": 1794322048.258414,
+      "crossed_at": 1794322048.258414,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0373": {
+    "kind": "positive",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [
+     "suspicious_dns"
+    ],
+    "src_ip": "10.10.10.157",
+    "detected": [
+     "suspicious_dns"
+    ],
+    "events": [
+     {
+      "id": 157,
+      "dedup_key": "suspicious_dns|10.10.10.157|watchlist",
+      "category": "suspicious_dns",
+      "severity": "medium",
+      "hit_count": 2,
+      "rule_version": 2,
+      "src": "10.10.10.157",
+      "is_open": true,
+      "created": 1794322051.808386,
+      "detected": 1794322051.606688,
+      "crossed_at": 1794322051.6066883,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0374": {
+    "kind": "positive",
+    "category": "abnormal_traffic",
+    "variant": "",
+    "expect": [
+     "abnormal_traffic"
+    ],
+    "src_ip": "10.10.10.158",
+    "detected": [
+     "abnormal_traffic"
+    ],
+    "events": [
+     {
+      "id": 158,
+      "dedup_key": "abnormal_traffic|10.10.10.158",
+      "category": "abnormal_traffic",
+      "severity": "medium",
+      "hit_count": 28,
+      "rule_version": 1,
+      "src": "10.10.10.158",
+      "is_open": true,
+      "created": 1794322058.239125,
+      "detected": 1794322058.237681,
+      "crossed_at": 1794322058.2376807,
+      "alerts": 1
+     }
+    ]
+   },
+   "T0375": {
+    "kind": "hard_negative",
+    "category": "suspicious_dns",
+    "variant": "",
+    "expect": [],
+    "src_ip": "10.10.10.159",
+    "detected": [],
+    "events": []
+   }
+  }
+ },
+ "monitor": {
+  "final_state": "stopped",
+  "packets_captured": 3200576,
+  "packets_dropped": 0
+ },
+ "resources": {
+  "samples": 2228,
+  "cpu_percent_median": 1.0,
+  "cpu_percent_p95": 15.0,
+  "cpu_percent_max": 31.0,
+  "rss_mb_median": 70.090752,
+  "rss_mb_max": 71.368704
+ }
+}

@@ -1,0 +1,89 @@
+/* Design tokens. Severity colours are always paired with a word or shape, never colour alone. */
+:root {
+  --ink: #16262e;
+  --ink-soft: #3d505a;
+  --ink-faint: #4f6370;
+  --paper: #eef3f2;
+  --surface: #ffffff;
+  --sunken: #e5ecea;
+  --line: #d3dedc;
+  --focus: #1456c8;
+
+  --sea: #0b7a75;
+  --on-sea: #ffffff;
+  --sea-text: #0a6b66;
+  --sea-wash: #d8eeec;
+
+  --sev-informational: #566b77;
+  --sev-low: #2a68ad;
+  --sev-medium: #a86d00;
+  --sev-high: #c94a14;
+  --sev-critical: #a8123e;
+  --wash-informational: #e3eaee;
+  --wash-low: #dce9f6;
+  --wash-medium: #f6ead0;
+  --wash-high: #f9e1d5;
+  --wash-critical: #f6d9e2;
+
+  --danger: #a8123e;
+  --warn: #a86d00;
+
+  --font: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+  --font-data: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 0.9375rem;
+  --step-1: 1.0625rem;
+  --step-2: 1.375rem;
+  --step-3: 1.75rem;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+  --rail: 13.5rem;
+  --header: 3.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ink: #e2ecea;
+    --ink-soft: #a9bcc2;
+    --ink-faint: #7f949c;
+    --paper: #0e1a1f;
+    --surface: #15252c;
+    --sunken: #101e24;
+    --line: #26393f;
+    --focus: #7db0ff;
+    --sea: #3cc4ba;
+    --on-sea: #0e1a1f;
+    --sea-text: #3cc4ba;
+    --sea-wash: #123a3a;
+    --sev-informational: #9bb0bb;
+    --sev-low: #7fb1ec;
+    --sev-medium: #e0a53a;
+    --sev-high: #f0865a;
+    --sev-critical: #f07a9b;
+    --wash-informational: #1f3139;
+    --wash-low: #172f46;
+    --wash-medium: #3a2f14;
+    --wash-high: #3d2318;
+    --wash-critical: #40192a;
+    --danger: #f07a9b;
+    --warn: #e0a53a;
+  }
+}
+:root[data-theme='dark'] {
+  --ink: #e2ecea; --ink-soft: #a9bcc2; --ink-faint: #7f949c; --paper: #0e1a1f; --surface: #15252c;
+  --sunken: #101e24; --line: #26393f; --focus: #7db0ff; --sea: #3cc4ba; --on-sea: #0e1a1f; --sea-text: #3cc4ba; --sea-wash: #123a3a;
+  --sev-informational: #9bb0bb; --sev-low: #7fb1ec; --sev-medium: #e0a53a; --sev-high: #f0865a;
+  --sev-critical: #f07a9b; --wash-informational: #1f3139; --wash-low: #172f46; --wash-medium: #3a2f14;
+  --wash-high: #3d2318; --wash-critical: #40192a; --danger: #f07a9b; --warn: #e0a53a;
+}
+
+/* When the data on screen may be old the whole page changes character, not just one badge. */
+[data-currency='historical'] {
+  --paper: #e7e6e1;
+  --sunken: #dddcd6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) [data-currency='historical'] { --paper: #17191a; --sunken: #121415; }
+}

@@ -1,0 +1,834 @@
+{
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "best-practice"
+  ],
+  "views": 36,
+  "results": [
+    {
+      "view": "light/desktop /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 6,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "li[data-zero=\"true\"]:nth-child(1) > span"
+            ],
+            [
+              "li[data-zero=\"true\"]:nth-child(2) > span"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "light/desktop /events",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /rules",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 6,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "tr:nth-child(1) > td:nth-child(6) > .tag.good"
+            ],
+            [
+              "tr:nth-child(2) > td:nth-child(6) > .tag.good"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 38,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /users",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 4,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "tr:nth-child(1) > td:nth-child(3) > .good.tag"
+            ],
+            [
+              "tr:nth-child(2) > td:nth-child(3) > .good.tag"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /settings",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /events/40",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /rules/1",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 6,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "li[data-zero=\"true\"]:nth-child(1) > span"
+            ],
+            [
+              "li[data-zero=\"true\"]:nth-child(2) > span"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "light/phone /events",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /rules",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 6,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "tr:nth-child(1) > td:nth-child(6) > .tag.good"
+            ],
+            [
+              "tr:nth-child(2) > td:nth-child(6) > .tag.good"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /users",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 4,
+          "examples": [
+            [
+              ".faint"
+            ],
+            [
+              "tr:nth-child(1) > td:nth-child(3) > .good.tag"
+            ],
+            [
+              "tr:nth-child(2) > td:nth-child(3) > .good.tag"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /settings",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /events/40",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /rules/1",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".faint"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/desktop /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/desktop /events",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /rules",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 38,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /users",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".primary"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /settings",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".primary"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /events/40",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /rules/1",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /users [add-user dialog]",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              "form > .row > .primary.btn"
+            ]
+          ]
+        }
+      ],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/phone /events",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /rules",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /users",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".primary"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /settings",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              ".primary"
+            ]
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /events/40",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /rules/1",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "nodes": 1,
+          "examples": [
+            [
+              ".brand"
+            ]
+          ]
+        }
+      ],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /users [add-user dialog]",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 1,
+          "examples": [
+            [
+              "form > .row > .primary.btn"
+            ]
+          ]
+        }
+      ],
+      "passes": 23,
+      "incomplete": [
+        "color-contrast"
+      ]
+    }
+  ]
+}

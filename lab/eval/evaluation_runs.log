@@ -1,0 +1,2 @@
+2026-11-10T14:10:48+00:00 eval-evaluation-20261110T141045 plan=fdf34579bc5f rules=[('abnormal_traffic', 1), ('auth_failures', 1), ('excessive_connections', 1), ('port_scan', 1), ('suspicious_dns', 2)]
+2026-11-10T16:13:24+00:00 eval-evaluation-20261110T161321 plan=fdf34579bc5f rules=[('abnormal_traffic', 1), ('auth_failures', 1), ('excessive_connections', 1), ('port_scan', 1), ('suspicious_dns', 2)]

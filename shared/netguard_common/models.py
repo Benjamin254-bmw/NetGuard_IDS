@@ -56,6 +56,8 @@ class User(Base):
     __tablename__ = "users"
     __table_args__ = (
         sa.CheckConstraint("username ~ '^[A-Za-z0-9_.-]{3,64}$'", name="username_format"),
+        sa.CheckConstraint("failed_login_count >= 0", name="failed_login_count_nonneg"),
+        sa.CheckConstraint("session_version >= 1", name="session_version_positive"),
         sa.Index("uq_users_username_lower", sa.func.lower(sa.text("username")), unique=True),
         sa.Index(
             "uq_users_email_lower",
@@ -74,6 +76,12 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(server_default=sa.true())
     created_at: Mapped[datetime] = mapped_column(tstz(), server_default=NOW)
     last_login_at: Mapped[datetime | None] = mapped_column(tstz())
+    # Login throttling and session revocation (Phase 5). A token carries the session_version it was
+    # issued under; bumping it (password change, deactivation, role change) invalidates old tokens.
+    failed_login_count: Mapped[int] = mapped_column(sa.Integer, server_default=sa.text("0"))
+    locked_until: Mapped[datetime | None] = mapped_column(tstz())
+    session_version: Mapped[int] = mapped_column(sa.Integer, server_default=sa.text("1"))
+    password_changed_at: Mapped[datetime | None] = mapped_column(tstz())
 
 
 class Device(Base):

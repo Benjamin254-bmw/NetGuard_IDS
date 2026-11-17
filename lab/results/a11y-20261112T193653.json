@@ -1,0 +1,240 @@
+{
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "best-practice"
+  ],
+  "views": 36,
+  "results": [
+    {
+      "view": "light/desktop /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /",
+      "violations": [],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "light/desktop /events",
+      "violations": [],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /rules",
+      "violations": [],
+      "passes": 38,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /users",
+      "violations": [],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /settings",
+      "violations": [],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /events/40",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /rules/1",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/desktop /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /",
+      "violations": [],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "light/phone /events",
+      "violations": [],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /rules",
+      "violations": [],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /users",
+      "violations": [],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /settings",
+      "violations": [],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /events/40",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /rules/1",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "light/phone /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/desktop /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /",
+      "violations": [],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/desktop /events",
+      "violations": [],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /rules",
+      "violations": [],
+      "passes": 38,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /users",
+      "violations": [],
+      "passes": 44,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /settings",
+      "violations": [],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /events/40",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /rules/1",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/desktop /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /login",
+      "violations": [],
+      "passes": 23,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /",
+      "violations": [],
+      "passes": 43,
+      "incomplete": [
+        "color-contrast"
+      ]
+    },
+    {
+      "view": "dark/phone /events",
+      "violations": [],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /rules",
+      "violations": [],
+      "passes": 39,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /users",
+      "violations": [],
+      "passes": 45,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /settings",
+      "violations": [],
+      "passes": 41,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /events/40",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /rules/1",
+      "violations": [],
+      "passes": 43,
+      "incomplete": []
+    },
+    {
+      "view": "dark/phone /users [add-user dialog]",
+      "violations": [],
+      "passes": 23,
+      "incomplete": [
+        "color-contrast"
+      ]
+    }
+  ]
+}
