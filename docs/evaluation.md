@@ -311,7 +311,7 @@ Phase 4B capacity sweep found loss starting above 32 MB/s on this laptop).
 - (Earlier, same cause as Phase 4B) a monitor without `NETGUARD_PROMISCUOUS=true` captured 5 packets in 24 minutes
   on Kali while the dashboard header still said "live". Both harnesses now stop with a message pointing at it.
 
-### Kali figures to record (not yet run)
+### Re-running the Phase 7 measurements on Kali
 ```
 make lab-up; set NETGUARD_PROMISCUOUS=true in .env; make monitor-run   # terminal 1
 make run-api                                                          # terminal 2
