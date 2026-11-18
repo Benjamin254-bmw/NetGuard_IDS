@@ -4,7 +4,7 @@ Lightweight network monitoring and rule-based intrusion detection for small netw
 (fourth-year Computer Technology project). Defensive tool: monitor only networks you own or are
 explicitly authorised to monitor.
 
-**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurements (end-to-end latency, whole-stack cost, API at scale, accessibility audit, parser benchmark) are recorded on Kali (`docs/evaluation.md`). Phase 8 (deployment as systemd services behind nginx on HTTPS, `docs/deployment.md`) is built; its install on Kali is pending.**
+**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurements (end-to-end latency, whole-stack cost, API at scale, accessibility audit, parser benchmark) are recorded on Kali (`docs/evaluation.md`). Phase 8 (deployment as systemd services behind nginx on HTTPS, `docs/deployment.md`) is installed and verified on Kali (`make deploy-verify`: all checks passed).**
 See `docs/CHECKLIST.md` for exactly what is and is not done.
 
 ## Layout

@@ -141,7 +141,7 @@ deferred parser benchmark, and an accessibility check. Design: ADR 0019. Write-u
 - *Not checked by hand:* keyboard-only walkthrough, screen reader, 200%/400% zoom reflow, reduced motion, forced colours (automated axe checks do not cover these)
 
 
-## Phase 8: deployment and documentation (built 2026-11-17; Kali install pending)
+## Phase 8: deployment and documentation (installed and verified on Kali 2026-11-18)
 Design: ADR 0020. Guide: `docs/deployment.md`.
 - [x] systemd units: `netguard-monitor` (own user, only CAP_NET_RAW + CAP_NET_ADMIN, read-only filesystem, spill in `StateDirectory`, no retry on a configuration refusal) and `netguard-api` (own user, no capabilities); `systemd-analyze verify` clean apart from the not-yet-installed binary path
 - [x] Per-service secrets files, root 600, read by systemd (`deploy/render_env.py`): API file holds only the API role and a new session secret, monitor file only the monitor role; no migrator password in either — 6 tests, quoting checked against real systemd parsing (`systemd-run --user`)
@@ -153,6 +153,7 @@ Design: ADR 0020. Guide: `docs/deployment.md`.
 - [x] `requirements.lock` generated (`make freeze`); the installer constrains versions with it
 - [x] Production-mode API (`NETGUARD_ENV=production`, empty allowed origins) behind the test nginx on Kali, against `netguard_test`: 12/12 checks — sign-in over https, session cookie `Secure; HttpOnly; SameSite=strict; Path=/api`, no API docs or schema, unsafe request without CSRF token 403, foreign origin 403, WebSocket `hello` over `wss://`, foreign-origin WebSocket refused, audit log recorded 127.0.0.1 for a request claiming 203.0.113.66, same-origin request with token 204. Mutation: with nginx appending instead of overwriting `X-Forwarded-For` the forged address reached the audit log and the check failed
 - [x] Full suite on Kali after Phase 8: `make lint` clean, `make typecheck` 58 files clean, `make test-integration` 466 passed (including the 10 new Phase 8 tests), 13 skipped (need CAP_NET_RAW); frontend tests, lint, build clean
-- [ ] (K) `make deploy-install && make deploy-verify` on Kali (needs sudo), then sign in at `https://<host>/` and see a live alert
+- [x] (K) `make deploy-install && make deploy-verify` on Kali 2026-11-18 (user-reported): ALL CHECKS PASSED, 21/21 — nginx, API and monitor services running; API on 127.0.0.1:8100 only; dashboard headers and routes; TLS 1.1 refused; monitor as `netguard-monitor` with only CAP_NET_RAW + CAP_NET_ADMIN, API as `netguard-api` with none; secrets files and key root-only, each holding only its own secrets; forged `X-Forwarded-For` not recorded
+- [ ] (K) Sign in at `https://<host>/` on the installed system and see a live alert arrive (e.g. `make lab-up`, then a scan from the lab attacker)
 
-Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, done on Kali) · Deployment and docs (8, built; Kali install pending)
+Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, done on Kali) · Deployment and docs (8, installed and verified on Kali)
