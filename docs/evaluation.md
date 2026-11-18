@@ -187,7 +187,29 @@ rows, 130 events, 132 alerts). Milliseconds, p50 / p95 / max:
 | /api/rules | 4.9 / 7.8 / 8.1 | 5.1 / 6.5 / 7.1 |
 
 Every endpoint the dashboard uses answered within 20 ms, also while the monitor was capturing 8 MB/s.
-The API at retention-sized tables on Kali: see the scale test below (pending).
+**API at retention-sized tables on Kali** (`make stack-api-scale`, scratch database `netguard_scale` seeded
+with 432,375 per-second and 864,020 per-minute synthetic rows and 20 devices, events and alerts empty; scratch
+API only, no monitor or traffic; source `stack-apionly-20261118T050651.json`). Milliseconds, p50 / p95 / max:
+
+| endpoint | p50 | p95 | max |
+|---|---|---|---|
+| /api/overview | 9.8 | 11.4 | 17.2 |
+| /api/monitor/status | 4.2 | 5.5 | 6.0 |
+| /api/traffic/series (15 min, as the dashboard asks) | 8.1 | 9.4 | 15.7 |
+| /api/traffic/protocols | 10.6 | 12.7 | 20.3 |
+| /api/traffic/top-talkers (1 h) | 9.5 | 12.2 | 13.7 |
+| /api/devices | 7.2 | 15.5 | 16.3 |
+| /api/events | 6.0 | 7.6 | 15.4 |
+| /api/alerts | 6.6 | 8.7 | 10.8 |
+| /api/rules | 5.9 | 14.3 | 16.7 |
+| traffic series, 24 h, 60 s buckets (widest allowed) | 253.2 | 274.8 | 285.8 |
+| protocols, 24 h | 128.1 | 133.5 | 139.1 |
+| top talkers, 30 days (widest allowed) | 378.3 | 722.6 | 766.3 |
+
+Every request returned 200. What the dashboard asks for stays within about 20 ms with the tables at their
+retention limits; the widest ranges the API allows take up to about 0.3 s (24 h) and 0.77 s (30-day top
+talkers). The laptop is about 1.2-1.7x slower than the sandbox on the wide ranges (sandbox: 208 / 89 / 223 ms
+p50). Same limits as the sandbox scale test: synthetic counters, empty events and alerts tables.
 Limits as for the sandbox runs: minutes, not hours; one lab; one victim; at most 5 simulated clients.
 
 ### 1. Alert latency, scan start to the dashboard feed (`lab/e2e_latency.py`, sandbox)

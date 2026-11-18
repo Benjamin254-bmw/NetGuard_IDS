@@ -123,7 +123,7 @@ Legend: [x] done and verified (where stated) · [ ] open task that still blocks 
 - [x] (K) Kali 2026-11-12, user-confirmed: a new alert arrives without a page refresh, and stopping then restarting the monitor turns the header to "Monitor is not responding" and back to live
 - *Not built (deferred, not blocking Phase 6):* custom chart ranges and a dark-mode toggle (nice to have); a tool-based accessibility audit (Phase 7 or 8); production serving and HTTPS (Phase 8). Open question for Phase 8: a monitor that is running but captures nothing (as in the promiscuous case above) still shows live; a visible captured-packets signal in the header would catch it
 
-## Phase 7: final measurements (built and run in the sandbox; Kali runs pending)
+## Phase 7: final measurements (done; Kali figures recorded 2026-11-17/18)
 Scope chosen with the user 2026-11-12: end-to-end latency, full-stack resource use and API response times, the
 deferred parser benchmark, and an accessibility check. Design: ADR 0019. Write-up: `docs/evaluation.md` (Phase 7).
 - [x] Latency harness `lab/e2e_latency.py` (scan start to alert on `/api/ws`): sandbox 30/30 detected, median 0.702 s, p95 0.722 s, max 0.747 s; WebSocket delivery about 7 ms. Refuses to run without a working capture (warm-up check names the missing `NETGUARD_PROMISCUOUS=true`; the refusal was exercised)
@@ -135,7 +135,8 @@ deferred parser benchmark, and an accessibility check. Design: ADR 0019. Write-u
 - [x] (K) `make bench-parser` on Kali 2026-11-17: 234,013-249,860 vs Scapy 4,270-4,313 frames/s (55-58x), `docs/evaluation.md` section 5
 - [x] (K) `make e2e-latency` on Kali 2026-11-17: 30/30, scan start to alert on the WebSocket median 0.561 s, p95 0.776 s, max 0.988 s (`docs/evaluation.md`)
 - [x] (K) `make stack-resources` on Kali 2026-11-17: idle about 183 MB total; at 8 MB/s the monitor uses 52% of a core, 0 drops; every dashboard endpoint under 20 ms (`docs/evaluation.md`)
-- [ ] (K) Run on Kali and record the figures: the scale test (`make scale-db-up seed-scale stack-api-scale scale-db-down`) (commands in `docs/evaluation.md`)
+- [x] (K) Scale test on Kali 2026-11-18 (432,375 + 864,020 synthetic rows): dashboard queries p95 5.5-15.5 ms, max 20.3 ms; widest ranges p50 253 / 128 / 378 ms (24 h series, 24 h protocols, 30 d top talkers), max 766 ms; all 200 (`docs/evaluation.md`)
+- [x] **Phase 7 complete on Kali (2026-11-18).**
 - *Not measured (stated limits):* latency under heavy load; more than 5 simultaneous dashboard clients; runs of hours (growth, retention behaviour, stability); events and alerts tables at scale; detection under packet loss; behaviour on a real network
 - *Not checked by hand:* keyboard-only walkthrough, screen reader, 200%/400% zoom reflow, reduced motion, forced colours (automated axe checks do not cover these)
 
@@ -154,4 +155,4 @@ Design: ADR 0020. Guide: `docs/deployment.md`.
 - [x] Full suite on Kali after Phase 8: `make lint` clean, `make typecheck` 58 files clean, `make test-integration` 466 passed (including the 10 new Phase 8 tests), 13 skipped (need CAP_NET_RAW); frontend tests, lint, build clean
 - [ ] (K) `make deploy-install && make deploy-verify` on Kali (needs sudo), then sign in at `https://<host>/` and see a live alert
 
-Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, built; parser benchmark recorded on Kali, other Kali runs pending) · Deployment and docs (8, built; Kali install pending)
+Monitor: capture, discovery (3, done) · detection rules (4A, done) · evaluation harness (4B, done) · **Gate A (passed)** · API/WebSocket (5, done) · Dashboard (6, done, verified on Kali) · Final measurements (7, done on Kali) · Deployment and docs (8, built; Kali install pending)
