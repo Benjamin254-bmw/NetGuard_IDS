@@ -1,13 +1,99 @@
 # NetGuard IDS
 
-Lightweight network monitoring and rule-based intrusion detection for small networks
-(fourth-year Computer Technology project). Defensive tool: monitor only networks you own or are
-explicitly authorised to monitor.
+**Lightweight network monitoring and rule-based intrusion detection for small networks.**
+A capture service watches one authorised network segment, detects five kinds of hostile behaviour, and
+pushes alerts to a web dashboard in well under a second. Built as a fourth-year Computer Technology project,
+with every claim measured on real traffic in an isolated lab.
 
-**Status: Phases 1-4 built; the evaluation (Phase 4B) was reproduced on Kali and Gate A passed on 2026-11-11 (see docs/evaluation.md). Phase 5 (API, authentication, WebSocket) is built and verified on Kali. The dashboard (Phase 6) is built and verified on Kali (`docs/dashboard.md`). Phase 7 measurements (end-to-end latency, whole-stack cost, API at scale, accessibility audit, parser benchmark) are recorded on Kali (`docs/evaluation.md`). Phase 8 (deployment as systemd services behind nginx on HTTPS, `docs/deployment.md`) is installed and verified on Kali (`make deploy-verify`: all checks passed).**
-See `docs/CHECKLIST.md` for exactly what is and is not done.
+> **Defensive tool.** Monitor only networks you own or are explicitly authorised to monitor. The monitor
+> refuses to start until an interface and an authorised subnet are configured.
 
-## Layout
+## What it does
+- **Captures traffic** with a raw `AF_PACKET` socket and a kernel BPF filter. Its own parser is 55-58x
+  faster than Scapy on the same frames. Headers only: payloads are never copied.
+- **Finds devices** passively (and by ARP sweep if enabled), and keeps per-second and per-minute traffic
+  statistics with automatic retention.
+- **Detects five behaviours**: port scans, connection floods, repeated SSH login failures, abnormal traffic
+  volume, and suspicious DNS. Thresholds live in the database, are versioned, and can be changed from the
+  dashboard while the monitor runs. Every event records which rule version fired it.
+- **Raises alerts** with deduplication and severity escalation. Events are triaged (new, investigating,
+  resolved, false positive) and alerts acknowledged or dismissed. Everything is written exactly once to
+  PostgreSQL and pushed live to the dashboard over a WebSocket.
+- **Dashboard** (React + TypeScript): overview, traffic charts, devices, events and alerts, rule editing with
+  version history, user management and an audit log. The header always tells you whether the data is live,
+  stale or historical.
+- **Secure by default**: Argon2id passwords, HttpOnly SameSite=Strict session cookies, CSRF and Origin checks,
+  admin/analyst roles, login throttling and lockout, an append-only audit log, three least-privilege database
+  roles, and a monitor that never runs as root (only `CAP_NET_RAW` and `CAP_NET_ADMIN`).
+
+## How it fits together
+```
+                 +--------------------- one HTTPS origin (nginx) ----------------------+
+ browser  <----> |  /          dashboard (static React build)                          |
+                 |  /api, /api/ws  ---> API (FastAPI, loopback only, no capabilities) |
+                 +---------------------------------------|------------------------------+
+                                                         | LISTEN/NOTIFY + SQL (api role)
+ network  ---AF_PACKET--->  monitor  ---batched, exactly-once writes--->  PostgreSQL
+           (CAP_NET_RAW + CAP_NET_ADMIN only)              (monitor role)
+```
+Monitor, API and dashboard are separate processes with separate system users and database roles. The design
+decisions are written down as 20 architecture decision records in [`docs/adr`](docs/adr).
+
+## Results (measured on a ThinkPad S1 Yoga, Intel i7-4500U, Kali Linux)
+| what | result |
+|---|---|
+| Detection, 250 frozen evaluation trials | **30/30 attacks detected per rule, 0 false positives** across normal traffic and near-threshold hard negatives |
+| Scan to alert on the dashboard | median **0.56 s**, max 0.99 s (30/30) |
+| Lossless capture | up to **32 MB/s UDP** (about 22,000 packets/s) and **3,000 new TCP connections/s**; losses above that are counted, not hidden |
+| Resource use | about **185 MB** RAM for monitor + API + PostgreSQL; monitor about half a core at 8 MB/s |
+| API at retention-sized tables (1.3 M rows) | dashboard queries under **20 ms** |
+| Accessibility (axe-core, 36 views, light/dark, desktop/phone) | **0 violations** |
+
+Known misses are reported, not removed: UDP, FIN, NULL, Xmas and slow scans are not detected (0/20). The
+method (seeded trial plan, frozen rules, Wilson confidence intervals) and the full results are in
+[`docs/evaluation.md`](docs/evaluation.md).
+
+## Quick start (Kali / Debian, PostgreSQL 15+)
+```bash
+make setup && make init-env && make db-init && make migrate   # venv, .env with generated secrets, DB + roles, schema
+make frontend-install
+make create-admin USERNAME=you                                # prompts for the password
+make lab-up                                                   # isolated 10.10.10.0/24 test lab (no uplink)
+# in .env: NETGUARD_MONITOR_INTERFACE=br-lab  NETGUARD_AUTHORIZED_SUBNET=10.10.10.0/24  NETGUARD_PROMISCUOUS=true
+make run-api          # terminal 1
+make frontend-dev     # terminal 2, then open http://127.0.0.1:5173
+make monitor-run      # terminal 3
+make verify-detection # real attacks inside the lab; watch the alerts arrive
+```
+To run it as system services with the dashboard on HTTPS: `make deploy-install && make deploy-verify`
+([`docs/deployment.md`](docs/deployment.md)).
+
+## Documentation
+| document | contents |
+|---|---|
+| [`docs/monitor.md`](docs/monitor.md) | running and tuning the monitor |
+| [`docs/detection-rules.md`](docs/detection-rules.md) | the five rules, their thresholds and known limits |
+| [`docs/api.md`](docs/api.md) | REST and WebSocket API, authentication |
+| [`docs/dashboard.md`](docs/dashboard.md) | dashboard pages and the live-status rules |
+| [`docs/evaluation.md`](docs/evaluation.md) | evaluation method and every measured figure |
+| [`docs/deployment.md`](docs/deployment.md) | systemd + nginx install, operation, files |
+| [`docs/database-schema.md`](docs/database-schema.md) | generated schema reference |
+| [`docs/CHECKLIST.md`](docs/CHECKLIST.md) | what was built and how each part was verified |
+
+## Project status
+All eight phases are complete and verified on the target machine: foundation, database, capture, detection,
+evaluation (Gate A passed 2026-11-11), API, dashboard, final measurements, and deployment
+(`make deploy-verify`: all checks passed, 2026-11-18). Tests: 466 Python tests (unit and integration against
+PostgreSQL) and 59 frontend tests; `ruff` and `mypy --strict` clean.
+
+**Stack:** Python 3.12/3.13, FastAPI, SQLAlchemy 2 + psycopg 3, Alembic, PostgreSQL 18, React + TypeScript +
+Vite, nginx, systemd.
+
+---
+
+# Developer guide
+
+## Repository layout
 | Path | Purpose |
 |---|---|
 | `shared/netguard_common` | Settings, logging, DB engine/diagnostics shared by API and monitor |
