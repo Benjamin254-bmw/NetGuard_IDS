@@ -89,6 +89,8 @@ PostgreSQL) and 59 frontend tests; `ruff` and `mypy --strict` clean.
 **Stack:** Python 3.12/3.13, FastAPI, SQLAlchemy 2 + psycopg 3, Alembic, PostgreSQL 18, React + TypeScript +
 Vite, nginx, systemd.
 
+**License:** [MIT](LICENSE).
+
 ---
 
 # Developer guide
